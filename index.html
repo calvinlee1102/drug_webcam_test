@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>50Visualizing training with tfjs-vis</h1>
+    <h1>51Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -579,11 +579,11 @@
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
         <video id="streamvideo" class="videostream"  autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
-        <img id="imgvideo"><canvas id="videocanvas"></canvas><br />
+        <canvas id="videocanvas"></canvas><br />
+        <canvas id="videocanvas2"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
-        <img id="screenshot-img"><br />
-        <p><button class="capture-button">Capture video</button></p>
+        <p><button id="capture-button">Capture video</button></p>
         <p><button id="screenshot-button">Take screenshot</button></p><br />
     </div>
     <script>
@@ -591,7 +591,7 @@
         //    document.querySelector('video').src = stream.url;
         //}
         const captureVideoButton =
-            document.querySelector('#screenshot .capture-button');
+            document.querySelector('#capture-button');
         const screenshotButton = document.querySelector('#screenshot-button');
         const canvasvideo = document.querySelector('#videocanvas');
         const img = document.querySelector('#screenshot-img');
@@ -641,28 +641,7 @@
             }
         }
         initCameraStream();
-
-        function keepcapture() {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            var x = 0;
-            var y = 0;
-            var rectlen = canvas.height;
-            if (canvas.width > canvas.height) {
-                rectlen = canvas.height;
-                x = ((canvas.width - canvas.height) / 2).toFixed(0);
-            } else {
-                rectlen = canvas.width;
-                y = ((canvas.height - canvas.width) / 2).toFixed(0);
-            }
-            canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
-            canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
-            // Other browsers will fall back to image/png
-            canvasvideo = canvas;
-        }
-        //var timeoutID = window.setInterval((() => keepcapture()), 1000);
-        screenshotButton.onclick = function () {
+        captureVideoButton.onclick = function () {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -679,11 +658,26 @@
             canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
             canvasvideo.width = rectlen;
             canvasvideo.height = rectlen;
-            canvasvideo.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
-            // Other browsers will fall back to image/png
-            //canvasvideo = canvas;
-            alert('w=' + canvas.width + ' ,h=' + canvas.height);
-            //img.src = canvasvideo.toDataURL('image/webp');
+            canvasvideo.getContext('2d').drawImage(canvas, 0, 0, rectlen, rectlen, 0, 0, rectlen, rectlen);
+        };
+        screenshotButton.onclick = function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvasvideo.width;
+            canvas.height = canvasvideo.height;
+            var x = 0;
+            var y = 0;
+            var rectlen = canvas.height;
+            if (canvas.width > canvas.height) {
+                rectlen = canvas.height;
+                x = ((canvas.width - canvas.height) / 2).toFixed(0);
+            } else {
+                rectlen = canvas.width;
+                y = ((canvas.height - canvas.width) / 2).toFixed(0);
+            }
+            canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            canvasvideo2.width = rectlen;
+            canvasvideo2.height = rectlen;
+            canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
         };
     </script>
     <script src="mnist.58d86013.js"></script>
