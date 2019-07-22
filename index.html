@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>63Visualizing training with tfjs-vis</h1>
+    <h1>65Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -87,9 +87,9 @@
         <button id="UploadModelFile" onclick="UploadModelFile();">Upload Pretrain Model</button><br />
         Or<br />
         <button id="loadModelLocally" onclick="loadModelLocally();">Load Model From IndexDB</button><br />
-        TrainData Size=<input id="trainDataSize" value="500" style="width:50px;" /><br />
+        TrainData Size=<input id="trainDataSize" value="200" style="width:50px;" /><br />
         TestData Size=<input id="testDataSize" value="100" style="width:50px;" onchange="document.getElementById('sametestsize').innerHTML = document.getElementById('testDataSize').value;"/><br />
-        Batch Size=<input id="batchsize" value="64" style="width:50px;" /><br />
+        Batch Size=<input id="batchsize" value="20" style="width:50px;" /><br />
         Epochs=<input id="epochs" value="10" style="width:50px;" /><br />
         Optimizer=
         <select id="optimizer">
@@ -394,6 +394,7 @@
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
             async function webcampredict() {
+                document.getElementById("predictA").innerHTML = "";
                 var canvas = document.createElement('canvas');
                 canvas.width = imgW;
                 canvas.height = imgH;
