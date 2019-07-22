@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>10Visualizing training with tfjs-vis</h1>
+    <h1>11Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -631,13 +631,16 @@
                 devices.forEach(function (device) {
                     console.log(device.kind + ": " + device.label +
                         " id = " + device.deviceId);
-                    if (device.kind == "videoinput") {
+                    if (device.kind === "videoinput") {
                         videoDevices[videoDeviceIndex++] = device.deviceId;
                     }
                 });
-                alert(videoDevices[1]);
+                alert(videoDevices);
                 var constraints = {
-                    deviceId: { exact: videoDevices[1] }
+                    deviceId: {
+                        facingMode: {
+                            exact: videoDevices[1]
+                        }}
                 };
                 return navigator.mediaDevices.getUserMedia({ video: constraints });
             })
