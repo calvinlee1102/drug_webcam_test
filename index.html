@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>51Visualizing training with tfjs-vis</h1>
+    <h1>52Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -674,7 +674,7 @@
                 rectlen = canvas.width;
                 y = ((canvas.height - canvas.width) / 2).toFixed(0);
             }
-            canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            canvas.getContext('2d').drawImage(canvasvideo, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
