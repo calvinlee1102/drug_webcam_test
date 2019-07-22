@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="refresh" content="10" id="refresh">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
     <style>
         .lang-javascript {
@@ -28,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h1>35Visualizing training with tfjs-vis</h1>
+    <h1>36Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -587,6 +588,10 @@
         <p><button id="screenshot-button">Take screenshot</button></p><br />
     </div>
     <script>
+        var meta = document.getElementById("refresh");
+        setInterval(function () {
+            meta.content = meta.content;
+        }, parseInt(meta.content / 2) * 1000);
         //function update(stream) {
         //    document.querySelector('video').src = stream.url;
         //}
@@ -659,11 +664,11 @@
                 y = ((canvas.height - canvas.width) / 2).toFixed(0);
             }
             canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
-            canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
-            // Other browsers will fall back to image/png
-            canvasvideo = canvas;
+            canvasvideo.width = rectlen;
+            canvasvideo.height = rectlen;
+            canvasvideo.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
         }
-        //var timeoutID = window.setInterval((() => keepcapture()), 1000);
+        var timeoutID = window.setInterval((() => keepcapture()), 1000);
         screenshotButton.onclick = function () {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
@@ -684,7 +689,6 @@
             canvasvideo.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
             // Other browsers will fall back to image/png
             //canvasvideo = canvas;
-            alert('w=' + canvas.width + ' ,h=' + canvas.height);
             //img.src = canvasvideo.toDataURL('image/webp');
         };
     </script>
