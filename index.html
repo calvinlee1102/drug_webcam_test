@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>58Visualizing training with tfjs-vis</h1>
+    <h1>59Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -391,6 +391,10 @@
                 labels.dispose();
             }
             document.querySelector('#show-all').addEventListener('click', () => showAll());
+
+            function webcampredict() {
+                alert('building');
+            }
 
             function getLayervalue(i) {
                 const container = {
