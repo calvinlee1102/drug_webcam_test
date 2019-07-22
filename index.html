@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>2Visualizing training with tfjs-vis</h1>
+    <h1>3Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -645,9 +645,9 @@
                 if (window.webkitURL) {
                     video.src = window.webkitURL.createObjectURL(stream);
                     localMediaStream = stream;
-                } else if (video.mozSrcObject !== undefined) {
+                } else if (video.mozSrcObject != undefined) {
                     video.mozSrcObject = stream;
-                } else if (video.srcObject !== undefined) {
+                } else if (video.srcObject != undefined) {
                     video.srcObject = stream;
                 } else {
                     video.src = stream;
