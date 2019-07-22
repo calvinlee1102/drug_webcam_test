@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>56Visualizing training with tfjs-vis</h1>
+    <h1>57Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -579,7 +579,8 @@
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
         <video id="streamvideo" class="videostream"  autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
-        <canvas id="videocanvas"></canvas><br />
+        <p><button id="capture-button">Capture</button></p>
+        <canvas id="videocanvas" style="visibility:hidden;height:0px;width:0px;"></canvas><br />
         <canvas id="videocanvas2"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
