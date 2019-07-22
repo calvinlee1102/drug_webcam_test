@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>23Visualizing training with tfjs-vis</h1>
+    <h1>25Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -628,11 +628,11 @@
         //}
         function initCameraStream() {
             // stop any active streams in the window
-            if (window.stream) {
-                //window.stream.getTracks().forEach(function (track) {
-                //    track.stop();
-                //});
-            }
+            //if (window.stream) {
+            //    window.stream.getTracks().forEach(function (track) {
+            //        track.stop();
+            //    });
+            //}
             var constraints = {
                 audio: false,
                 video: {
@@ -658,6 +658,7 @@
         initCameraStream();
 
         function keepcapture() {
+            alert('in');
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -674,9 +675,10 @@
             canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
             canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
             // Other browsers will fall back to image/png
-            imgvideo.src = canvas.toDataURL('image/*');
+            imgvideo.src = canvas.toDataURL('image/webp');
+            alert('out');
         }
-        var timeoutID = window.setInterval((() => keepcapture()), 500);
+        var timeoutID = window.setInterval((() => keepcapture()), 1000);
         screenshotButton.onclick = video.onclick = function () {
             img.src = imgvideo.src
         };
