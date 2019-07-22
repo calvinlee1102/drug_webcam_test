@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>31Visualizing training with tfjs-vis</h1>
+    <h1>32Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -578,7 +578,7 @@
         </script>
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
-        <video id="streamvideo" style="visibility:hidden;height:0px;width:0px;" class="videostream"  autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
+        <video id="streamvideo" class="videostream"  autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
         <img id="imgvideo"><canvas id="videocanvas"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
@@ -609,23 +609,6 @@
                 }
             }
         }
-        //navigator.mediaDevices.enumerateDevices().then(function (devices) {
-        //    devices = devices.filter(function (devices) { return devices.kind === 'videoinput'; });
-        //    var videoinput_id = '';
-        //    devices.forEach(function (device) {
-        //        if (device.label.toLowerCase().search("back") > -1) {
-        //            videoinput_id = device.deviceId;
-        //        }
-        //    });
-        //    if (videoinput_id != '') {
-        //        navigator.mediaDevices.getUserMedia({ video: { deviceId: { 'exact': videoinput_id }, facingMode: 'environment' } }).then(handleSuccess);
-        //    } else {
-        //        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(handleSuccess);
-        //    }
-        //});
-        //function handleSuccess(stream) {
-        //    video.srcObject = window.stream;
-        //}
         function initCameraStream() {
             // stop any active streams in the window
             //if (window.stream) {
@@ -680,7 +663,6 @@
         }
         //var timeoutID = window.setInterval((() => keepcapture()), 1000);
         screenshotButton.onclick = function () {
-            alert('in');
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -698,7 +680,7 @@
             canvasvideo.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
             // Other browsers will fall back to image/png
             //canvasvideo = canvas;
-            alert('out');
+            alert('w=' + canvas.width + ' ,h=' + canvas.height);
             //img.src = canvasvideo.toDataURL('image/webp');
         };
     </script>
