@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>22Visualizing training with tfjs-vis</h1>
+    <h1>23Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -629,9 +629,9 @@
         function initCameraStream() {
             // stop any active streams in the window
             if (window.stream) {
-                window.stream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
+                //window.stream.getTracks().forEach(function (track) {
+                //    track.stop();
+                //});
             }
             var constraints = {
                 audio: false,
