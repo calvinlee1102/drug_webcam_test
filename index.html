@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>67Visualizing training with tfjs-vis</h1>
+    <h1>68Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -404,6 +404,7 @@
                 var testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
                 var preds = await model.predict(testxs).argMax([-1]).data();
                 document.getElementById("predictA").innerHTML = preds;
+                preds.dispose();
             }
 
             function getLayervalue(i) {
