@@ -88,7 +88,7 @@
         Or<br />
         <button id="loadModelLocally" onclick="loadModelLocally();">Load Model From IndexDB</button><br />
         TrainData Size=<input id="trainDataSize" value="500" style="width:50px;" /><br />
-        TestData Size=<input id="testDataSize" value="100" style="width:50px;" /><br />
+        TestData Size=<input id="testDataSize" value="100" style="width:50px;" onchange="document.getElementById('sametestsize').innerHTML = document.getElementById('testDataSize').value;"/><br />
         Batch Size=<input id="batchsize" value="64" style="width:50px;" /><br />
         Epochs=<input id="epochs" value="10" style="width:50px;" /><br />
         Optimizer=
@@ -103,6 +103,7 @@
         <button id="start-training-1" disabled="">Start Training</button><br />
         <button id="start-training-2" disabled="" style="visibility:hidden;">Start Training(just history)</button><br />
         <b>Step6:</b><br />
+        TestData Size=<a id="sametestsize">100</a><br />
         <button id="show-all">show Per-class accuracy and Confusion matrix</button><br />
         <button id="savemodel" disabled="" onclick="saveModelLocally(model);">Save Model to IndexDB</button><br />
         <button id="downloadmodel" disabled="" onclick="downloadModelLocally(model);">Download Model.json & Weight.bin</button><br /><br />
@@ -165,14 +166,14 @@
                     }
                     var shifthor = 0;
                     var shiftver = 0;
-                    if (shiftboolean=="t"){
+                    if (shiftboolean == "t") {
                         var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
                         var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
                         shifthor *= canvas.width;
                         shiftver *= canvas.height;
                     }
-                    ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale/2), canvas.width * scale, canvas.height * scale);
-                    
+                    ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
+
                     drawArea.appendChild(canvas2);
                     imageTensor.dispose();
                 }
@@ -234,7 +235,7 @@
                 const rotateboolean = document.getElementById('rotateboolean').value;
                 const rotatemax = parseInt(document.getElementById('rotatemax').value);
                 const rotatemin = parseInt(document.getElementById('rotatemin').value);
-                if (rotateboolean=="t") {
+                if (rotateboolean == "t") {
                     if (eval(rotatemax - rotatemin) > 360) { alert('degrees between rotate max and min out of 360'); }
                     if (rotatemax < rotatemin) { alert('rotate max degree can not smaller than min'); }
                 }
@@ -367,7 +368,7 @@
                     visorInstance.toggle();
                 }
                 //const [preds, labels] = doPrediction();
-                testDataSize = 2;
+                testDataSize = parseInt(document.getElementById('testDataSize').value);
                 const testData = await data.nextTestBatch(testDataSize);
                 const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
                 const labels = testData.labels.argMax([-1]);
@@ -512,7 +513,7 @@
                 var classes = parseInt(document.getElementById('totalclass').value);
                 var labels = document.getElementById('labels').value.split(",");
                 var onehotarray = new Array();
-                if (document.getElementById('totalclass').value == "" || document.getElementById('labels').value=="") {
+                if (document.getElementById('totalclass').value == "" || document.getElementById('labels').value == "") {
                     alert('class or labels no data');
                 } else {
                     if (document.getElementById('labels').value.substr(document.getElementById('labels').value.length - 1, 1) == "," || document.getElementById('labels').value.substr(0, 1) == ",") {
