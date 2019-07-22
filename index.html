@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>7Visualizing training with tfjs-vis</h1>
+    <h1>8Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -578,7 +578,7 @@
         </script>
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
-        <video class="videostream" autoplay></video><br />
+        <video class="videostream"  autoplay></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
         <img id="videocanvas"><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
@@ -609,51 +609,51 @@
                 }
             }
         }
-        navigator.mediaDevices.enumerateDevices().then(function (devices) {
-            devices = devices.filter(function (devices) { return devices.kind === 'videoinput'; });
-            var videoinput_id = '';
-            devices.forEach(function (device) {
-                if (device.label.toLowerCase().search("back") < -1) {
-                    videoinput_id = device.deviceId;
-                }
-            });
-            if (videoinput_id != '') {
-                navigator.mediaDevices.getUserMedia({ video: { deviceId: { 'exact': videoinput_id }, facingMode: 'environment' } }).then(handleSuccess);
-            } else {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(handleSuccess);
-            }
-
-        });
-        //navigator.mediaDevices.enumerateDevices()
-        //    .then(devices => {
-        //        var videoDevices = [0, 0];
-        //        var videoDeviceIndex = 0;
-        //        devices.forEach(function (device) {
-        //            console.log(device.kind + ": " + device.label +
-        //                " id = " + device.deviceId);
-        //            if (device.kind == "videoinput") {
-        //                alert('in');
-        //                videoDevices[videoDeviceIndex++] = device.deviceId;
-        //                alert('out');
-        //            }
-        //        });
-        //        var constraints = {
-        //            deviceId: { exact: videoDevices[1] }
-        //        };
-        //        return navigator.mediaDevices.getUserMedia({ video: constraints });
-        //    })
-        //    .then(stream => {
-        //        if (window.webkitURL) {
-        //            video.src = window.webkitURL.createObjectURL(stream);
-        //            localMediaStream = stream;
-        //        } else if (video.mozSrcObject != undefined) {
-        //            video.mozSrcObject = stream;
-        //        } else if (video.srcObject != undefined) {
-        //            video.srcObject = stream;
-        //        } else {
-        //            video.src = stream;
+        //navigator.mediaDevices.enumerateDevices().then(function (devices) {
+        //    devices = devices.filter(function (devices) { return devices.kind === 'videoinput'; });
+        //    var videoinput_id = '';
+        //    devices.forEach(function (device) {
+        //        if (device.label.toLowerCase().search("back") < -1) {
+        //            videoinput_id = device.deviceId;
         //        }
-        //    }).catch(e => console.error(e));
+        //    });
+        //    if (videoinput_id != '') {
+        //        navigator.mediaDevices.getUserMedia({ video: { deviceId: { 'exact': videoinput_id }, facingMode: 'environment' } }).then(handleSuccess);
+        //    } else {
+        //        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(handleSuccess);
+        //    }
+
+        //});
+        navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                var videoDevices = [0, 0];
+                var videoDeviceIndex = 0;
+                devices.forEach(function (device) {
+                    console.log(device.kind + ": " + device.label +
+                        " id = " + device.deviceId);
+                    if (device.kind == "videoinput") {
+                        alert('in');
+                        videoDevices[videoDeviceIndex++] = device.deviceId;
+                        alert('out');
+                    }
+                });
+                var constraints = {
+                    deviceId: { exact: videoDevices[1] }
+                };
+                return navigator.mediaDevices.getUserMedia({ video: constraints });
+            })
+            .then(stream => {
+                if (window.webkitURL) {
+                    video.src = window.webkitURL.createObjectURL(stream);
+                    localMediaStream = stream;
+                } else if (video.mozSrcObject != undefined) {
+                    video.mozSrcObject = stream;
+                } else if (video.srcObject != undefined) {
+                    video.srcObject = stream;
+                } else {
+                    video.src = stream;
+                }
+            }).catch(e => console.error(e));
         function handleSuccess(stream) {
             video.srcObject = stream;
         }
