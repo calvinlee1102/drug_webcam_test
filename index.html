@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>29Visualizing training with tfjs-vis</h1>
+    <h1>30Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -649,11 +649,11 @@
                 if (constraints.video.facingMode) {
                     return navigator.mediaDevices.enumerateDevices();
                 }
-                function handleError(error) {
-                    console.log(error);
-                    if (error === 'PermissionDeniedError') {
-                        alert("Permission denied. Please refresh and give permission.");
-                    }
+            }
+            function handleError(error) {
+                console.log(error);
+                if (error === 'PermissionDeniedError') {
+                    alert("Permission denied. Please refresh and give permission.");
                 }
             }
         }
