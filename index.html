@@ -1,7 +1,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="10" id="refresh">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
     <style>
         .lang-javascript {
@@ -29,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>36Visualizing training with tfjs-vis</h1>
+    <h1>Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -588,10 +587,6 @@
         <p><button id="screenshot-button">Take screenshot</button></p><br />
     </div>
     <script>
-        var meta = document.getElementById("refresh");
-        setInterval(function () {
-            meta.content = meta.content;
-        }, parseInt(meta.content / 2) * 1000);
         //function update(stream) {
         //    document.querySelector('video').src = stream.url;
         //}
@@ -626,8 +621,8 @@
                 video: {
                     //width: { min: 1024, ideal: window.innerWidth, max: 1920 },
                     //height: { min: 776, ideal: window.innerHeight, max: 1080 },
-                    width: 1080,
-                    height: 776,
+                    width: 800,
+                    height: 800,
                     facingMode: 'environment'
                 }
             };
