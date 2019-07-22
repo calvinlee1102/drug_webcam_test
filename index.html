@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>52Visualizing training with tfjs-vis</h1>
+    <h1>53Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -661,23 +661,23 @@
             canvasvideo.getContext('2d').drawImage(canvas, 0, 0, rectlen, rectlen, 0, 0, rectlen, rectlen);
         };
         screenshotButton.onclick = function () {
-            const canvas = document.createElement('canvas');
-            canvas.width = canvasvideo.width;
-            canvas.height = canvasvideo.height;
+            const canvas2 = document.createElement('canvas');
+            canvas2.width = canvasvideo.width;
+            canvas2.height = canvasvideo.height;
             var x = 0;
             var y = 0;
-            var rectlen = canvas.height;
-            if (canvas.width > canvas.height) {
-                rectlen = canvas.height;
-                x = ((canvas.width - canvas.height) / 2).toFixed(0);
+            var rectlen = canvas2.height;
+            if (canvas2.width > canvas2.height) {
+                rectlen = canvas2.height;
+                x = ((canvas2.width - canvas2.height) / 2).toFixed(0);
             } else {
-                rectlen = canvas.width;
-                y = ((canvas.height - canvas.width) / 2).toFixed(0);
+                rectlen = canvas2.width;
+                y = ((canvas2.height - canvas2.width) / 2).toFixed(0);
             }
-            canvas.getContext('2d').drawImage(canvasvideo, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            canvas2.getContext('2d').drawImage(canvasvideo, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
-            canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
+            canvasvideo2.getContext('2d').drawImage(canvas2, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
         };
     </script>
     <script src="mnist.58d86013.js"></script>
