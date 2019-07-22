@@ -367,7 +367,7 @@
                     visorInstance.toggle();
                 }
                 //const [preds, labels] = doPrediction();
-                testDataSize = 500;
+                testDataSize = 2;
                 const testData = await data.nextTestBatch(testDataSize);
                 const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
                 const labels = testData.labels.argMax([-1]);
@@ -393,30 +393,13 @@
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
             async function webcampredict() {
-                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE);
-                //const canvas = document.createElement('canvas'); //videocanvas2
-                const canvas = document.getElementById("videocanvas2");
+                var canvas = document.createElement('canvas');
                 canvas.width = imgW;
                 canvas.height = imgH;
-                const ctx = canvas.getContext('2d');
-                var channel = parseInt(document.getElementById('channel').value);
-                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                if (channel == 1) {
-                    for (let j = 0; j < imageData.data.length / 4; j++) {
-                        //Gray channel.
-                        image[j] = imageData.data[j * 4] / 255;
-                    }
-                } else {
-                    for (let j = 0; j < imageData.data.length / 4; j++) {
-                        //All channel.
-                        for (let k = 0; k < 3; k++) {
-                            image[3 * j + k] = imageData.data[j * 4 + k] / 255;
-                        }
-                    }
-                }
-                batchImagesArray.set(image, i * IMAGE_SIZE);
-                const xs = await tf.tensor2d(batchImagesArray, [batchSize, IMAGE_SIZE]);
-                const testxs = xs.reshape([testDataSize, imgW, imgH, channel]);
+                var canvasvideo = document.getElementById('videocanvas2');
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
+                const testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
                 const preds = model.predict(testxs).argMax([-1]);
                 alert(preds);
             }
