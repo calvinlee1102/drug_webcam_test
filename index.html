@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>16Visualizing training with tfjs-vis</h1>
+    <h1>Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -595,7 +595,7 @@
         const screenshotButton = document.querySelector('#screenshot-button');
         const imgvideo = document.querySelector('#videocanvas');
         const img = document.querySelector('#screenshot-img');
-        const video = document.querySelector('#screenshot video');
+        const video = document.querySelector('#screenshot video').value;
         var zoomsize = 1;
         function zoom(type) {
             if (type == "in") {
@@ -624,7 +624,7 @@
             }
         });
         function handleSuccess(stream) {
-            video.srcObject = stream.toDataURL();
+            video.srcObject = stream;
         }
         function keepcapture() {
             const canvas = document.createElement('canvas');
