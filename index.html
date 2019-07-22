@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>28Visualizing training with tfjs-vis</h1>
+    <h1>29Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -679,7 +679,8 @@
             canvasvideo = canvas;
         }
         //var timeoutID = window.setInterval((() => keepcapture()), 1000);
-        screenshotButton.onclick = video.onclick = function () {
+        screenshotButton.onclick = function () {
+            alert('in');
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -694,10 +695,11 @@
                 y = ((canvas.height - canvas.width) / 2).toFixed(0);
             }
             canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
-            canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
+            canvasvideo.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
             // Other browsers will fall back to image/png
-            canvasvideo = canvas;
-            img.src = canvasvideo.toDataURL('image/webp');
+            //canvasvideo = canvas;
+            alert('out');
+            //img.src = canvasvideo.toDataURL('image/webp');
         };
     </script>
     <script src="mnist.58d86013.js"></script>
