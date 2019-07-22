@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>65Visualizing training with tfjs-vis</h1>
+    <h1>66Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -394,6 +394,7 @@
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
             async function webcampredict() {
+                alert('in');
                 document.getElementById("predictA").innerHTML = "";
                 var canvas = document.createElement('canvas');
                 canvas.width = imgW;
