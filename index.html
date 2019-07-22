@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>69Visualizing training with tfjs-vis</h1>
+    <h1>70Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -156,7 +156,7 @@
                     canvas2.height = imgH;
                     canvas2.style = 'margin: 4px;';
                     const ctx2 = canvas2.getContext('2d');
-                    ctx2.fillStyle = "black";
+                    ctx2.fillStyle = "white";
                     ctx2.fillRect(0, 0, canvas.width, canvas.height);
                     var scale = 1;
                     if (scaleboolean == "t") {
@@ -199,11 +199,42 @@
                     if (rotateboolean == 't') {
                         var degree = getRandom(rotatemin, rotatemax);
                         await tf.browser.toPixels(tf.tensor1d(image).as2D(imgW, imgH), canvas);
-                        const ctx = canvas.getContext('2d');
-                        ctx.translate(canvas.width / 2, canvas.height / 2);
-                        ctx.rotate(degree * Math.PI / 180);
-                        ctx.drawImage(canvas, -canvas.width / 2, -canvas.width / 2);
-                        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                        if (rotateboolean == "t") {
+                            var degree = getRandom(rotatemin, rotatemax);
+                            const ctx = canvas.getContext('2d');
+                            ctx.translate(canvas.width / 2, canvas.height / 2);
+                            ctx.rotate(degree * Math.PI / 180);
+                            ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+                        }
+                        const canvas2 = document.createElement('canvas');
+                        canvas2.width = imgW;
+                        canvas2.height = imgH;
+                        canvas2.style = 'margin: 4px;';
+                        const ctx2 = canvas2.getContext('2d');
+                        ctx2.fillStyle = "white";
+                        ctx2.fillRect(0, 0, canvas.width, canvas.height);
+                        var scale = 1;
+                        if (scaleboolean == "t") {
+                            var maxscale = parseFloat(document.getElementById('scalemax').value);
+                            var minscale = parseFloat(document.getElementById('scalemin').value);
+                            var scale = Math.random() * (maxscale - minscale) + minscale;
+                        }
+                        var shifthor = 0;
+                        var shiftver = 0;
+                        if (shiftboolean == "t") {
+                            var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
+                            var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
+                            shifthor *= canvas.width;
+                            shiftver *= canvas.height;
+                        }
+                        ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
+
+                        //const ctx = canvas.getContext('2d');
+                        //ctx.translate(canvas.width / 2, canvas.height / 2);
+                        //ctx.rotate(degree * Math.PI / 180);
+                        //ctx.drawImage(canvas, -canvas.width / 2, -canvas.width / 2);
+                        var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
                         if (channel == 1) {
                             for (let j = 0; j < imageData.data.length / 4; j++) {
                                 //Gray channel.
