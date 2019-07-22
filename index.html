@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>26Visualizing training with tfjs-vis</h1>
+    <h1>27Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -636,6 +636,8 @@
             var constraints = {
                 audio: false,
                 video: {
+                    width: { min: 1024, ideal: window.innerWidth, max: 1920 },
+                    height: { min: 776, ideal: window.innerHeight, max: 1080 },
                     facingMode: 'environment'
                 }
             };
