@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>6Visualizing training with tfjs-vis</h1>
+    <h1>7Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -578,7 +578,7 @@
         </script>
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
-        <video class="videostream" style="visibility:hidden;height:0px;width:0px;" autoplay></video><br />
+        <video class="videostream" autoplay></video><br />
         <img id="videocanvas"><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
@@ -631,8 +631,10 @@
         //        devices.forEach(function (device) {
         //            console.log(device.kind + ": " + device.label +
         //                " id = " + device.deviceId);
-        //            if (device.kind === "videoinput") {
+        //            if (device.kind == "videoinput") {
+        //                alert('in');
         //                videoDevices[videoDeviceIndex++] = device.deviceId;
+        //                alert('out');
         //            }
         //        });
         //        var constraints = {
