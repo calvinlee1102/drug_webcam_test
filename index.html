@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>25Visualizing training with tfjs-vis</h1>
+    <h1>26Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -579,7 +579,7 @@
     </section><br />
     <div id="screenshot"> <!--style="text-align:center;"-->
         <video id="streamvideo" class="videostream"  autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
-        <img id="videocanvas"><br />
+        <img id="imgvideo"><canvas id="videocanvas"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">放大</button>
         <button id="zoomout" onclick="zoom('out')">縮小</button><br />
         <img id="screenshot-img"><br />
@@ -593,7 +593,7 @@
         const captureVideoButton =
             document.querySelector('#screenshot .capture-button');
         const screenshotButton = document.querySelector('#screenshot-button');
-        const imgvideo = document.querySelector('#videocanvas');
+        const canvasvideo = document.querySelector('#videocanvas');
         const img = document.querySelector('#screenshot-img');
         const video = document.querySelector('#streamvideo');
         var zoomsize = 1;
@@ -675,12 +675,12 @@
             canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
             canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
             // Other browsers will fall back to image/png
-            imgvideo.src = canvas.toDataURL('image/webp');
+            canvasvideo = canvas;
             alert('out');
         }
         var timeoutID = window.setInterval((() => keepcapture()), 1000);
         screenshotButton.onclick = video.onclick = function () {
-            img.src = imgvideo.src
+            img.src = canvasvideo.toDataURL('image/webp');
         };
     </script>
     <script src="mnist.58d86013.js"></script>
