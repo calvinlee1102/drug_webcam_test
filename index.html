@@ -401,7 +401,7 @@
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
                 const testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
-                const preds = model.predict(testxs).argMax([-1]).data;
+                const preds = model.predict(testxs).argMax([-1]).data();
                 document.getElementById("predictA").innerHTML = preds;
             }
 
