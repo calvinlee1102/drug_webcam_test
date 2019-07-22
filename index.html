@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>60Visualizing training with tfjs-vis</h1>
+    <h1>61Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -401,8 +401,8 @@
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
                 const testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
-                const preds = model.predict(testxs).argMax([-1]);
-                alert(preds);
+                const preds = model.predict(testxs).argMax([-1]).data;
+                document.getElementById("predictA").innerHTML = preds;
             }
 
             function getLayervalue(i) {
@@ -601,6 +601,7 @@
         <button id="zoomin" onclick="zoom('in')">Zoom In</button>
         <button id="zoomout" onclick="zoom('out')">Zoom Out</button><br />
         <button id="screenshot-button" style="visibility:hidden;">Take screenshot</button><br />
+        Predict Label:<a id="predictA"></a><br />
         <button id="webcampredict" onclick="webcampredict()">Predict</button>
     </div>
     <script>
