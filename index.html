@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>55Visualizing training with tfjs-vis</h1>
+    <h1>56Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -602,11 +602,13 @@
             if (type == "in") {
                 if (zoomsize > 0.2) {
                     zoomsize -= 0.1;
+                    screenshotButton.click();
                 }
             }
             if (type == "out") {
                 if (zoomsize <= 0.9) {
                     zoomsize += 0.1;
+                    screenshotButton.click();
                 }
             }
         }
@@ -660,6 +662,7 @@
             canvasvideo.width = rectlen;
             canvasvideo.height = rectlen;
             canvasvideo.getContext('2d').drawImage(canvas, 0, 0, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            screenshotButton.click();
         };
         screenshotButton.onclick = function () {
             const canvas = document.createElement('canvas');
