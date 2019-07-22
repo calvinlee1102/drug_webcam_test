@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
@@ -52,6 +52,11 @@
         Total Images=<a id="TotalImages"></a><br />
         Train Images=<a id="TrainImages"></a><br />
         Test Images=<a id="TestImages"></a><br /><br />
+        Build a Label file(if loaded you can skip)<br />
+        Convert Label to ArrayBuffer and Download (One Hot Encoding)<br />
+        Total Classes Number= <input id="totalclass" value="" style="width:50px;" />classes<br />
+        Please split by , (example:  0,5,7,3,2,8,1)<button onclick="getonehotfile();">GetOneHotFile</button><br />
+        <textarea id="labels" style="width:300px;height:200px;"></textarea><br /><br />
         <b>Step4:</b><br />
         Rotate=
         <select id="rotateboolean" onchange="rotatechange();">
@@ -101,10 +106,6 @@
         <button id="show-all">show Per-class accuracy and Confusion matrix</button><br />
         <button id="savemodel" disabled="" onclick="saveModelLocally(model);">Save Model to IndexDB</button><br />
         <button id="downloadmodel" disabled="" onclick="downloadModelLocally(model);">Download Model.json & Weight.bin</button><br /><br />
-        Convert Label to ArrayBuffer and Download (One Hot Encoding)<br />
-        Total Classes Number= <input id="totalclass" value="" style="width:50px;" />classes<br />
-        Please split by , (example:  0,5,7,3,2,8,1)<button onclick="getonehotfile();">GetOneHotFile</button><br />
-        <textarea id="labels" style="width:300px;height:200px;"></textarea>
         <script>
             var loadfromweb = true;
             var imgW = parseInt(document.getElementById('ImageWidth').value);
@@ -575,8 +576,83 @@
                 return image
             }
         </script>
-    </section>
+    </section><br />
+    <div id="screenshot"> <!--style="text-align:center;"-->
+        <video class="videostream" style="visibility:hidden;height:0px;width:0px;" autoplay></video><br />
+        <img id="videocanvas"><br />
+        <button id="zoomin" onclick="zoom('in')">放大</button>
+        <button id="zoomout" onclick="zoom('out')">縮小</button><br />
+        <img id="screenshot-img"><br />
+        <p><button class="capture-button">Capture video</button></p>
+        <p><button id="screenshot-button">Take screenshot</button></p><br />
+    </div>
+    <script>
+        //function update(stream) {
+        //    document.querySelector('video').src = stream.url;
+        //}
+        const captureVideoButton =
+            document.querySelector('#screenshot .capture-button');
+        const screenshotButton = document.querySelector('#screenshot-button');
+        const imgvideo = document.querySelector('#videocanvas');
+        const img = document.querySelector('#screenshot-img');
+        const video = document.querySelector('#screenshot video');
+        var zoomsize = 1;
+        function zoom(type) {
+            if (type == "in") {
+                if (zoomsize > 0.2) {
+                    zoomsize -= 0.1;
+                }
+            }
+            if (type == "out") {
+                if (zoomsize <= 0.9) {
+                    zoomsize += 0.1;
+                }
+            }
+        }
+        navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            devices = devices.filter(function (devices) { return devices.kind === 'videoinput'; });
+            var videoinput_id = '';
+            devices.forEach(function (device) {
+                if (device.label.toLowerCase().search("back") > -1) {
+                    videoinput_id = device.deviceId;
+                }
+            });
+            if (videoinput_id != '') {
+                navigator.mediaDevices.getUserMedia({ video: { deviceId: { 'exact': videoinput_id }, facingMode: 'environment' } }).then(handleSuccess);
+            } else {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(handleSuccess);
+            }
+
+        });
+        function handleSuccess(stream) {
+            video.srcObject = stream;
+        }
+        function keepcapture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            var x = 0;
+            var y = 0;
+            var rectlen = canvas.height;
+            if (canvas.width > canvas.height) {
+                rectlen = canvas.height;
+                x = ((canvas.width - canvas.height) / 2).toFixed(0);
+            } else {
+                rectlen = canvas.width;
+                y = ((canvas.height - canvas.width) / 2).toFixed(0);
+            }
+            canvas.getContext('2d').drawImage(video, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            canvas.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
+            // Other browsers will fall back to image/png
+            imgvideo.src = canvas.toDataURL('image/webp');
+        }
+        var timeoutID = window.setInterval((() => keepcapture()), 100);
+        screenshotButton.onclick = video.onclick = function () {
+            img.src = imgvideo.src
+        };
+    </script>
     <script src="mnist.58d86013.js"></script>
+
     <button onclick="test()" style="visibility:hidden;">test</button>
     <a id="todownload" download="mnist_labels_uint8" style="visibility:hidden;">download</a>
     <canvas id="testcanvas"></canvas>
