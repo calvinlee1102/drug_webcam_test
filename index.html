@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>20Visualizing training with tfjs-vis</h1>
+    <h1>21Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -626,35 +626,35 @@
         //function handleSuccess(stream) {
         //    video.srcObject = window.stream;
         //}
-        document.addEventListener("DOMContentLoaded", function (event) {
-            // do some WebRTC checks before creating the interface
-            DetectRTC.load(function () {
-                // do some checks
-                if (DetectRTC.isWebRTCSupported == false) {
-                    alert('Please use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher');
-                }
-                else {
-                    if (DetectRTC.hasWebcam == false) {
-                        alert('Please install an external webcam device.');
-                    }
-                    else {
-                        amountOfCameras = DetectRTC.videoInputDevices.length;
-                        initCameraStream();
-                    }
-                }
-                console.log("RTC Debug info: " +
-                    "\n OS:                   " + DetectRTC.osName + " " + DetectRTC.osVersion +
-                    "\n browser:              " + DetectRTC.browser.fullVersion + " " + DetectRTC.browser.name +
-                    "\n is Mobile Device:     " + DetectRTC.isMobileDevice +
-                    "\n has webcam:           " + DetectRTC.hasWebcam +
-                    "\n has permission:       " + DetectRTC.isWebsiteHasWebcamPermission +
-                    "\n getUserMedia Support: " + DetectRTC.isGetUserMediaSupported +
-                    "\n isWebRTC Supported:   " + DetectRTC.isWebRTCSupported +
-                    "\n WebAudio Supported:   " + DetectRTC.isAudioContextSupported +
-                    "\n is Mobile Device:     " + DetectRTC.isMobileDevice
-                );
-            });
-        });
+        //document.addEventListener("DOMContentLoaded", function (event) {
+        //    // do some WebRTC checks before creating the interface
+        //    DetectRTC.load(function () {
+        //        // do some checks
+        //        if (DetectRTC.isWebRTCSupported == false) {
+        //            alert('Please use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher');
+        //        }
+        //        else {
+        //            if (DetectRTC.hasWebcam == false) {
+        //                alert('Please install an external webcam device.');
+        //            }
+        //            else {
+        //                amountOfCameras = DetectRTC.videoInputDevices.length;
+        //                initCameraStream();
+        //            }
+        //        }
+        //        console.log("RTC Debug info: " +
+        //            "\n OS:                   " + DetectRTC.osName + " " + DetectRTC.osVersion +
+        //            "\n browser:              " + DetectRTC.browser.fullVersion + " " + DetectRTC.browser.name +
+        //            "\n is Mobile Device:     " + DetectRTC.isMobileDevice +
+        //            "\n has webcam:           " + DetectRTC.hasWebcam +
+        //            "\n has permission:       " + DetectRTC.isWebsiteHasWebcamPermission +
+        //            "\n getUserMedia Support: " + DetectRTC.isGetUserMediaSupported +
+        //            "\n isWebRTC Supported:   " + DetectRTC.isWebRTCSupported +
+        //            "\n WebAudio Supported:   " + DetectRTC.isAudioContextSupported +
+        //            "\n is Mobile Device:     " + DetectRTC.isMobileDevice
+        //        );
+        //    });
+        //});
         function initCameraStream() {
             // stop any active streams in the window
             if (window.stream) {
@@ -674,16 +674,17 @@
                 window.stream = stream; // make stream available to browser console
                 video.srcObject = stream;
                 if (constraints.video.facingMode) {
-                return navigator.mediaDevices.enumerateDevices();
-            }
-            function handleError(error) {
-                console.log(error);
-                if (error === 'PermissionDeniedError') {
-                    alert("Permission denied. Please refresh and give permission.");
+                    return navigator.mediaDevices.enumerateDevices();
+                }
+                function handleError(error) {
+                    console.log(error);
+                    if (error === 'PermissionDeniedError') {
+                        alert("Permission denied. Please refresh and give permission.");
+                    }
                 }
             }
         }
-
+        initCameraStream();
 
         function keepcapture() {
             const canvas = document.createElement('canvas');
