@@ -118,6 +118,7 @@
             var optimizertype = document.getElementById('optimizer').value;
             
             async function showExamples() {
+                var channel = parseInt(document.getElementById('channel').value);
                 // Get a surface
                 const surface = tfvis.visor().surface({
                     name: 'My First Surface',
@@ -149,7 +150,7 @@
 
             async function nextBatch(batchSize, data, index, IMAGE_SIZE, NUM_CLASSES) {
                 var channel = parseInt(document.getElementById('channel').value);
-                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE);
+                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE*3);
                 const batchLabelsArray = new Uint8Array(batchSize * NUM_CLASSES);
                 const rotatemax = parseInt(document.getElementById('rotatemax').value);
                 const rotatemin = parseInt(document.getElementById('rotatemin').value);
