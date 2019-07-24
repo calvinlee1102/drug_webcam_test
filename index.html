@@ -150,17 +150,16 @@
 
             async function nextBatch(batchSize, data, index, IMAGE_SIZE, NUM_CLASSES) {
                 var channel = parseInt(document.getElementById('channel').value);
-                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE*3);
+                var IMAGE_SIZE = imgW * imgH * channel;
+                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE);
                 const batchLabelsArray = new Uint8Array(batchSize * NUM_CLASSES);
                 const rotatemax = parseInt(document.getElementById('rotatemax').value);
                 const rotatemin = parseInt(document.getElementById('rotatemin').value);
                 const rotateboolean = document.getElementById('rotateboolean').value;
                 const scaleboolean = document.getElementById('scaleboolean').value;
                 const shiftboolean = document.getElementById('shiftboolean').value;
-                //const canvas = document.createElement('canvas');
-                const canvas = document.getElementById('testcanvas');
+                const canvas = document.createElement('canvas');
                 //const canvas = document.getElementById('testcanvas');
-                var IMAGE_SIZE = imgW * imgH * channel;
                 canvas.width = imgW;
                 canvas.height = imgH;
 
@@ -170,63 +169,52 @@
                     var degree = getRandom(rotatemin, rotatemax);
                     await tf.browser.toPixels(tf.tensor1d(image).reshape([imgW, imgH, channel]), canvas);
 
-                    //if (rotateboolean == "t") {
-                    //    var degree = getRandom(rotatemin, rotatemax);
-                    //    const ctx = canvas.getContext('2d');
-                    //    ctx.translate(canvas.width / 2, canvas.height / 2);
-                    //    ctx.rotate(degree * Math.PI / 180);
-                    //    ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
-                    //}
-                    //const canvas2 = document.createElement('canvas');
-                    ////const canvas2 = document.getElementById('testcanvas');
-                    //canvas2.width = imgW;
-                    //canvas2.height = imgH;
-                    //canvas2.style = 'margin: 4px;';
-                    //const ctx2 = canvas2.getContext('2d');
-                    //ctx2.fillStyle = "white";
-                    //ctx2.fillRect(0, 0, canvas.width, canvas.height);
-                    //var scale = 1;
-                    //if (scaleboolean == "t") {
-                    //    var maxscale = parseFloat(document.getElementById('scalemax').value);
-                    //    var minscale = parseFloat(document.getElementById('scalemin').value);
-                    //    var scale = Math.random() * (maxscale - minscale) + minscale;
-                    //}
-                    //var shifthor = 0;
-                    //var shiftver = 0;
-                    //if (shiftboolean == "t") {
-                    //    var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
-                    //    var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
-                    //    shifthor *= canvas.width;
-                    //    shiftver *= canvas.height;
-                    //}
-                    //ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
+                    if (rotateboolean == "t") {
+                        var degree = getRandom(rotatemin, rotatemax);
+                        const ctx = canvas.getContext('2d');
+                        ctx.translate(canvas.width / 2, canvas.height / 2);
+                        ctx.rotate(degree * Math.PI / 180);
+                        ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+                    }
+                    const canvas2 = document.createElement('canvas');
+                    //const canvas2 = document.getElementById('testcanvas');
+                    canvas2.width = imgW;
+                    canvas2.height = imgH;
+                    canvas2.style = 'margin: 4px;';
+                    const ctx2 = canvas2.getContext('2d');
+                    ctx2.fillStyle = "white";
+                    ctx2.fillRect(0, 0, canvas.width, canvas.height);
+                    var scale = 1;
+                    if (scaleboolean == "t") {
+                        var maxscale = parseFloat(document.getElementById('scalemax').value);
+                        var minscale = parseFloat(document.getElementById('scalemin').value);
+                        var scale = Math.random() * (maxscale - minscale) + minscale;
+                    }
+                    var shifthor = 0;
+                    var shiftver = 0;
+                    if (shiftboolean == "t") {
+                        var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
+                        var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
+                        shifthor *= canvas.width;
+                        shiftver *= canvas.height;
+                    }
+                    ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
 
-                    //var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
-                    //if (channel == 1) {
-                    //    for (let j = 0; j < imageData.data.length / 4; j++) {
-                    //        //Gray channel.
-                    //        image[j] = imageData.data[j * 4] / 255;
+                    var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                    if (channel == 1) {
+                        for (let j = 0; j < imageData.data.length / 4; j++) {
+                            //Gray channel.
+                            image[j] = imageData.data[j * 4] / 255;
                             
-                    //    }
-                    //} else {
-                    //    for (let j = 0; j < imageData.data.length / 4; j++) {
-                    //        // All channel.
-                    //        for (let k = 0; k < 3; k++) {
-                    //            image[3 * j + k] = imageData.data[j * 4 + k] / 255;
-                    //            //alert(imageData.data[j * 4+k])
-                    //            //alert(imageData.data[j * 4+k+1])
-                    //            //if (imageData.data[j * 4+k]==imageData.data[j * 4+k+1]) {
-                    //            //    alert('same');
-                    //            //}
-                    //        }
-                    //    }
-                    //    //for (let k = 0; k < 3; k++) {
-                    //    //    for (let j = 0; j < imageData.data.length / 4; j++) {
-                    //    //        // All channel.
-                    //    //        image[3 * j + k] = imageData.data[j * 4 + k] / 255;
-                    //    //    }
-                    //    //}
-                    //}
+                        }
+                    } else {
+                        for (let j = 0; j < imageData.data.length / 4; j++) {
+                            // All channel.
+                            for (let k = 0; k < 3; k++) {
+                                image[3 * j + k] = imageData.data[j * 4 + k] / 255;
+                            }
+                        }
+                    }
                     
                     batchImagesArray.set(image, i * IMAGE_SIZE);
                     const label = data[1].slice(idx * NUM_CLASSES, idx * NUM_CLASSES + NUM_CLASSES);
