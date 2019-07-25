@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>87Visualizing training with tfjs-vis</h1>
+    <h1>88Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -839,6 +839,7 @@
             }
             pxAmin /= searchlen;
             pxAmax /= searchlen;
+            alert("max=" + pxAmax.toFixed(0) + " ,min=" + pxAmin.toFixed(0));
             for (let j = 0; j < imageData.data.length / 4; j++) {
                 for (let i = 0; i < 3; i++) {
                     var pixel = imageData.data[4 * j + i];
