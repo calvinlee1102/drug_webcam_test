@@ -789,7 +789,7 @@
             canvasvideo2.height = rectlen;
             canvasvideo2.getContext('2d').drawImage(canvas,0, 0);
             await imagebalance(imgalpha);
-            canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
+            canvasvideo2.getContext('2d').drawImage(canvasvideo2, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
 
