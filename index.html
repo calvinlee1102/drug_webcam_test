@@ -29,7 +29,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>79Visualizing training with tfjs-vis</h1>
+    <h1>80Visualizing training with tfjs-vis</h1>
     <section>
     <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
     <b>Step1:</b><br />
@@ -308,7 +308,7 @@
             }
             model.compile({
                 optimizer: optimizer,
-                loss: 'categoricalCrossentropy',
+                loss: 'logcosh',
                 metrics: ['accuracy']
             });
             return model.fit(trainXs, trainYs, {
@@ -790,7 +790,7 @@
                 }
             }
             pixelArray.sort();
-            var searchlen = (pixelArray.length * 0.025).toFixed(0);
+            var searchlen = (pixelArray.length * 0.05).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
             for (i = 0; i < searchlen; i++){
