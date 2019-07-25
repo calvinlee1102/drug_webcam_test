@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>83Visualizing training with tfjs-vis</h1>
+    <h1>85Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -785,6 +785,7 @@
             //zoomcanvas
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
+            imagebalance();
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
@@ -814,10 +815,10 @@
                 }
             }
             canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
-            imagebalance();
+            
         };
         async function imagebalance() {
-            var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvasvideo2.width, canvasvideo2.height);
+            var imageData = canvasvideo.getContext('2d').getImageData(0, 0, canvasvideo.width, canvasvideo.height);
             var pixelArray = new Array();
             for (let j = 0; j < imageData.data.length / 4; j++) {
                 for (let i = 0; i < 3; i++) {
@@ -845,7 +846,7 @@
                     imageData.data[4 * j + i] = pixel;
                 }
             }
-            await canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
+            await canvasvideo.getContext('2d').putImageData(imageData, 0, 0);
         }
     </script>
     <script src="mnist.58d86013.js"></script>
