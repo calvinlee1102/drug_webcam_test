@@ -827,7 +827,9 @@
                     pixelArray[3 * j + i] = parseInt(imageData.data[4 * j + i]);
                 }
             }
-            pixelArray.sort();
+            pixelArray.sort(function (a, b) {
+                return a - b;
+            });
             var searchlen = (pixelArray.length * imgalpha).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
