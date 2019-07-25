@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
@@ -29,569 +29,600 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>72Visualizing training with tfjs-vis</h1>
+    <h1>73Visualizing training with tfjs-vis</h1>
     <section>
-        <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
-        <b>Step1:</b><br />
-        <button id="make-first-surface">Make a Workshop</button><br />
-        <b>Step2:</b><br />
-        ImageWidth=<input id="ImageWidth" value="28" style="width:50px;" /><br />
-        ImageHeight=<input id="ImageHeight" value="28" style="width:50px;" /><br />
-        Channel=
-        <select id="channel">
-            <option value="1">Gray</option>
-            <option value="3">RGB</option>
-        </select><br />
-        chunkSize=<input id="chunkSize" value="5000" style="width:50px;" /> images per load<br />
-        TestPart=<input id="TestPart" value="15" style="width:30px;" />%<br /><br />
-        <b>Step3:</b><br />
-        Images<input id="product" type="file" /><br />
-        Labels<input id="uploadlabel" type="file" /><br />
-        <button id="imagelabelupload">Start Upload</button><br />
-        Or<br />
-        <button id="load-data">Load Data From Web</button><br />
-        Total Images=<a id="TotalImages"></a><br />
-        Train Images=<a id="TrainImages"></a><br />
-        Test Images=<a id="TestImages"></a><br /><br />
-        Build a Label file(if loaded you can skip)<br />
-        Convert Label to ArrayBuffer and Download (One Hot Encoding)<br />
-        Total Classes Number= <input id="totalclass" value="" style="width:50px;" />classes<br />
-        Please split by , (example:  0,5,7,3,2,8,1)<button onclick="getonehotfile();">GetOneHotFile</button><br />
-        <textarea id="labels" style="width:300px;height:200px;"></textarea><br /><br />
-        <b>Step4:</b><br />
-        Rotate=
-        <select id="rotateboolean" onchange="rotatechange();">
-            <option value="f">false</option>
-            <option value="t">true</option>
-        </select>
-        ( Min=<input id="rotatemin" value="-180" style="width:50px;" onchange="rotatechange();" />
-        , Max=<input id="rotatemax" value="180" style="width:50px;" onchange="rotatechange();" /> degree)<br />
-        Scale=
-        <select id="scaleboolean">
-            <option value="f">false</option>
-            <option value="t">true</option>
-        </select>
-        ( Min=<input id="scalemin" value="0.5" style="width:50px;" />
-        , Max=<input id="scalemax" value="1.1" style="width:50px;" />)<br />
-        Shift=
-        <select id="shiftboolean">
-            <option value="f">false</option>
-            <option value="t">true</option>
-        </select>
-        ( Horizontal=<input id="shifthor" value="0.2" style="width:50px;" />
-        , Vertical=<input id="shiftver" value="0.2" style="width:50px;" /> from center)<br />
-        ExampleSize=<input id="ExampleSize" value="10" style="width:50px;" /><br />
-        <button id="show-examples" disabled="">Show Example Digits</button><br /><br />
-        <b>Step5:</b><br />
-        <button id="resetmodel">Reset Model</button><br />
-        model.json<input id="uploadmodel" type="file" /><br />
-        weight.bin<input id="uploadweight" type="file" /><br />
-        <button id="UploadModelFile" onclick="UploadModelFile();">Upload Pretrain Model</button><br />
-        Or<br />
-        <button id="loadModelLocally" onclick="loadModelLocally();">Load Model From IndexDB</button><br />
-        TrainData Size=<input id="trainDataSize" value="200" style="width:50px;" /><br />
-        TestData Size=<input id="testDataSize" value="100" style="width:50px;" onchange="document.getElementById('sametestsize').innerHTML = document.getElementById('testDataSize').value;"/><br />
-        Batch Size=<input id="batchsize" value="20" style="width:50px;" /><br />
-        Epochs=<input id="epochs" value="10" style="width:50px;" /><br />
-        Optimizer=
-        <select id="optimizer">
-            <option value="sgd">SGD 一階動量</option>
-            <option value="momentum">Momentum 一階動量</option>
-            <option value="rmsprop">RMSProp 二階動量</option>
-            <option value="adam">Adam 一 + 二階動量</option>
-        </select><br />
-        Learning Rate=<input id="learningrate" value="0.15" style="width:50px;" /><br />
-        <button onclick="modelinspection()">Model Inspection</button><br />
-        <button id="start-training-1" disabled="">Start Training</button><br />
-        <button id="start-training-2" disabled="" style="visibility:hidden;">Start Training(just history)</button><br />
-        <b>Step6:</b><br />
-        TestData Size=<a id="sametestsize">100</a><br />
-        <button id="show-all">show Per-class accuracy and Confusion matrix</button><br />
-        <button id="savemodel" disabled="" onclick="saveModelLocally(model);">Save Model to IndexDB</button><br />
-        <button id="downloadmodel" disabled="" onclick="downloadModelLocally(model);">Download Model.json & Weight.bin</button><br /><br />
-        <script>
-            var loadfromweb = true;
-            var imgW = parseInt(document.getElementById('ImageWidth').value);
-            var imgH = parseInt(document.getElementById('ImageHeight').value);
-            var channel = parseInt(document.getElementById('channel').value);
-            var LEARNING_RATE = parseFloat(document.getElementById('learningrate').value);
-            var optimizertype = document.getElementById('optimizer').value;
+    <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
+    <b>Step1:</b><br />
+    <button id="make-first-surface">Make a Workshop</button><br />
+    <b>Step2:</b><br />
+    ImageWidth=<input id="ImageWidth" value="28" style="width:50px;" /><br />
+    ImageHeight=<input id="ImageHeight" value="28" style="width:50px;" /><br />
+    Channel=
+    <select id="channel">
+        <option value="1">Gray</option>
+        <option value="3">RGB</option>
+    </select><br />
+    chunkSize=<input id="chunkSize" value="5000" style="width:50px;" /> images per load<br />
+    TestPart=<input id="TestPart" value="15" style="width:30px;" />%<br /><br />
+    <b>Step3:</b><br />
+    Images<input id="product" type="file" /><br />
+    Labels<input id="uploadlabel" type="file" /><br />
+    <button id="imagelabelupload">Start Upload</button><br />
+    Or<br />
+    <button id="load-data">Load Data From Web</button><br />
+    Total Images=<a id="TotalImages"></a><br />
+    Train Images=<a id="TrainImages"></a><br />
+    Test Images=<a id="TestImages"></a><br /><br />
+    Build a Label file(if loaded you can skip)<br />
+    Convert Label to ArrayBuffer and Download (One Hot Encoding)<br />
+    Total Classes Number= <input id="totalclass" value="" style="width:50px;" />classes<br />
+    Please split by , (example:  0,5,7,3,2,8,1)<button onclick="getonehotfile();">GetOneHotFile</button><br />
+    <textarea id="labels" style="width:300px;height:200px;"></textarea><br /><br />
+    <b>Step4:</b><br />
+    Rotate=
+    <select id="rotateboolean" onchange="rotatechange();">
+        <option value="f">false</option>
+        <option value="t">true</option>
+    </select>
+    ( Min=<input id="rotatemin" value="-180" style="width:50px;" onchange="rotatechange();" />
+    , Max=<input id="rotatemax" value="180" style="width:50px;" onchange="rotatechange();" /> degree)<br />
+    Scale=
+    <select id="scaleboolean">
+        <option value="f">false</option>
+        <option value="t">true</option>
+    </select>
+    ( Min=<input id="scalemin" value="0.5" style="width:50px;" />
+    , Max=<input id="scalemax" value="1.1" style="width:50px;" />)<br />
+    Shift=
+    <select id="shiftboolean">
+        <option value="f">false</option>
+        <option value="t">true</option>
+    </select>
+    ( Horizontal=<input id="shifthor" value="0.2" style="width:50px;" />
+    , Vertical=<input id="shiftver" value="0.2" style="width:50px;" /> from center)<br />
+    channel shift=
+    <select id="channelshiftboolean">
+        <option value="f">false</option>
+        <option value="t">true</option>
+    </select> (+-<input id="channelshift" value="30" style="width:50px;" />)<br />
+    ExampleSize=<input id="ExampleSize" value="10" style="width:50px;" /><br />
+    <button id="show-examples" disabled="">Show Example Digits</button><br /><br />
+    <b>Step5:</b><br />
+    <button id="resetmodel">Reset Model</button><br />
+    model.json<input id="uploadmodel" type="file" /><br />
+    weight.bin<input id="uploadweight" type="file" /><br />
+    <button id="UploadModelFile" onclick="UploadModelFile();">Upload Pretrain Model</button><br />
+    Or<br />
+    <button id="loadModelLocally" onclick="loadModelLocally();">Load Model From IndexDB</button><br />
+    TrainData Size=<input id="trainDataSize" value="200" style="width:50px;" /><br />
+    TestData Size=<input id="testDataSize" value="100" style="width:50px;" onchange="document.getElementById('sametestsize').innerHTML = document.getElementById('testDataSize').value;"/><br />
+    Batch Size=<input id="batchsize" value="20" style="width:50px;" /><br />
+    Epochs=<input id="epochs" value="10" style="width:50px;" /><br />
+    Optimizer=
+    <select id="optimizer">
+        <option value="sgd">SGD 一階動量</option>
+        <option value="momentum">Momentum 一階動量</option>
+        <option value="rmsprop">RMSProp 二階動量</option>
+        <option value="adam">Adam 一 + 二階動量</option>
+    </select><br />
+    Learning Rate=<input id="learningrate" value="0.15" style="width:50px;" /><br />
+    <button onclick="modelinspection()">Model Inspection</button><br />
+    <button id="start-training-1" disabled="">Start Training</button><br />
+    <button id="start-training-2" disabled="" style="visibility:hidden;">Start Training(just history)</button><br />
+    <b>Step6:</b><br />
+    TestData Size=<a id="sametestsize">100</a><br />
+    <button id="show-all">show Per-class accuracy and Confusion matrix</button><br />
+    <button id="savemodel" disabled="" onclick="saveModelLocally(model);">Save Model to IndexDB</button><br />
+    <button id="downloadmodel" disabled="" onclick="downloadModelLocally(model);">Download Model.json & Weight.bin</button><br /><br />
+    <script>
+        var loadfromweb = true;
+        var imgW = parseInt(document.getElementById('ImageWidth').value);
+        var imgH = parseInt(document.getElementById('ImageHeight').value);
+        var channel = parseInt(document.getElementById('channel').value);
+        var LEARNING_RATE = parseFloat(document.getElementById('learningrate').value);
+        var optimizertype = document.getElementById('optimizer').value;
             
-            async function showExamples() {
-                var channel = parseInt(document.getElementById('channel').value);
-                // Get a surface
-                const surface = tfvis.visor().surface({
-                    name: 'My First Surface',
-                    tab: 'Input Data'
-                });
-                const visorInstance = tfvis.visor();
-                if (!visorInstance.isOpen()) {
-                    visorInstance.toggle();
-                }
-                const drawArea = surface.drawArea; // Get the examples
-                const examples = await data.nextTestBatch(parseInt(document.getElementById('ExampleSize').value));
-                const numExamples = examples.xs.shape[0];
-
-                for (let i = 0; i < numExamples; i++) {
-                    const imageTensor = tf.tidy(() => {
-                        //alert(examples.xs.shape[1]);
-                        return examples.xs.slice([i, 0], [1, examples.xs.shape[1]]).reshape([imgW, imgH, channel]);
-                    }); // Create a canvas element to render each example
-                    const canvas = document.createElement('canvas');
-                    canvas.width = imgW;
-                    canvas.height = imgH;
-                    canvas.style = 'margin: 4px;';
-                    await tf.browser.toPixels(imageTensor, canvas);
-                    drawArea.appendChild(canvas);
-                    imageTensor.dispose();
-                }
+        async function showExamples() {
+            var channel = parseInt(document.getElementById('channel').value);
+            // Get a surface
+            const surface = tfvis.visor().surface({
+                name: 'My First Surface',
+                tab: 'Input Data'
+            });
+            const visorInstance = tfvis.visor();
+            if (!visorInstance.isOpen()) {
+                visorInstance.toggle();
             }
-            document.querySelector('#show-examples').addEventListener('click', async e => showExamples());
+            const drawArea = surface.drawArea; // Get the examples
+            const examples = await data.nextTestBatch(parseInt(document.getElementById('ExampleSize').value));
+            const numExamples = examples.xs.shape[0];
 
-            async function nextBatch(batchSize, data, index, IMAGE_SIZE, NUM_CLASSES) {
-                var channel = parseInt(document.getElementById('channel').value);
-                var IMAGE_SIZE = imgW * imgH * channel;
-                const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE);
-                const batchLabelsArray = new Uint8Array(batchSize * NUM_CLASSES);
-                const rotatemax = parseInt(document.getElementById('rotatemax').value);
-                const rotatemin = parseInt(document.getElementById('rotatemin').value);
-                const rotateboolean = document.getElementById('rotateboolean').value;
-                const scaleboolean = document.getElementById('scaleboolean').value;
-                const shiftboolean = document.getElementById('shiftboolean').value;
+            for (let i = 0; i < numExamples; i++) {
+                const imageTensor = tf.tidy(() => {
+                    return examples.xs.slice([i, 0], [1, examples.xs.shape[1]]).reshape([imgW, imgH, channel]);
+                }); // Create a canvas element to render each example
                 const canvas = document.createElement('canvas');
-                //const canvas = document.getElementById('testcanvas');
                 canvas.width = imgW;
                 canvas.height = imgH;
+                canvas.style = 'margin: 4px;';
+                await tf.browser.toPixels(imageTensor, canvas);
+                drawArea.appendChild(canvas);
+                imageTensor.dispose();
+            }
+        }
+        document.querySelector('#show-examples').addEventListener('click', async e => showExamples());
 
-                for (let i = 0; i < batchSize; i++) {
-                    const idx = index();
-                    var image = data[0].slice(idx * IMAGE_SIZE, idx * IMAGE_SIZE + IMAGE_SIZE);
-                    var degree = getRandom(rotatemin, rotatemax);
-                    await tf.browser.toPixels(tf.tensor1d(image).reshape([imgW, imgH, channel]), canvas);
+        async function nextBatch(batchSize, data, index, IMAGE_SIZE, NUM_CLASSES) {
+            var channel = parseInt(document.getElementById('channel').value);
+            var IMAGE_SIZE = imgW * imgH * channel;
+            const batchImagesArray = new Float32Array(batchSize * IMAGE_SIZE);
+            const batchLabelsArray = new Uint8Array(batchSize * NUM_CLASSES);
+            const rotatemax = parseInt(document.getElementById('rotatemax').value);
+            const rotatemin = parseInt(document.getElementById('rotatemin').value);
+            const rotateboolean = document.getElementById('rotateboolean').value;
+            const scaleboolean = document.getElementById('scaleboolean').value;
+            const shiftboolean = document.getElementById('shiftboolean').value;
+            const channelshiftboolean = document.getElementById('channelshiftboolean').value;
+            const channelshift = parseInt(document.getElementById('channelshift').value);
+            const canvas = document.createElement('canvas');
+            //const canvas = document.getElementById('testcanvas');
+            canvas.width = imgW;
+            canvas.height = imgH;
 
-                    if (rotateboolean == "t") {
-                        var degree = getRandom(rotatemin, rotatemax);
-                        const ctx = canvas.getContext('2d');
-                        ctx.translate(canvas.width / 2, canvas.height / 2);
-                        ctx.rotate(degree * Math.PI / 180);
-                        ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
-                    }
-                    const canvas2 = document.createElement('canvas');
-                    //const canvas2 = document.getElementById('testcanvas');
-                    canvas2.width = imgW;
-                    canvas2.height = imgH;
-                    canvas2.style = 'margin: 4px;';
-                    const ctx2 = canvas2.getContext('2d');
-                    ctx2.fillStyle = "white";
-                    ctx2.fillRect(0, 0, canvas.width, canvas.height);
-                    var scale = 1;
-                    if (scaleboolean == "t") {
-                        var maxscale = parseFloat(document.getElementById('scalemax').value);
-                        var minscale = parseFloat(document.getElementById('scalemin').value);
-                        var scale = Math.random() * (maxscale - minscale) + minscale;
-                    }
-                    var shifthor = 0;
-                    var shiftver = 0;
-                    if (shiftboolean == "t") {
-                        var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
-                        var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
-                        shifthor *= canvas.width;
-                        shiftver *= canvas.height;
-                    }
-                    ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
-
-                    var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
-                    if (channel == 1) {
-                        for (let j = 0; j < imageData.data.length / 4; j++) {
-                            //Gray channel.
-                            image[j] = imageData.data[j * 4] / 255;
-                            
-                        }
-                    } else {
-                        for (let j = 0; j < imageData.data.length / 4; j++) {
-                            // All channel.
-                            for (let k = 0; k < 3; k++) {
-                                image[3 * j + k] = imageData.data[j * 4 + k] / 255;
-                            }
-                        }
-                    }
-                    
-                    batchImagesArray.set(image, i * IMAGE_SIZE);
-                    const label = data[1].slice(idx * NUM_CLASSES, idx * NUM_CLASSES + NUM_CLASSES);
-                    batchLabelsArray.set(label, i * NUM_CLASSES);
-                }
-                const xs = await tf.tensor2d(batchImagesArray, [batchSize, IMAGE_SIZE]);
-                const labels = tf.tensor2d(batchLabelsArray, [batchSize, NUM_CLASSES]);
-                return {
-                    xs,
-                    labels
-                };
-            }
-
-            function rotatechange() {
-                const rotateboolean = document.getElementById('rotateboolean').value;
-                const rotatemax = parseInt(document.getElementById('rotatemax').value);
-                const rotatemin = parseInt(document.getElementById('rotatemin').value);
-                if (rotateboolean == "t") {
-                    if (eval(rotatemax - rotatemin) > 360) { alert('degrees between rotate max and min out of 360'); }
-                    if (rotatemax < rotatemin) { alert('rotate max degree can not smaller than min'); }
-                }
-            }
-
-            function getRandom(min, max) {
-                return Math.floor(Math.random() * (max - min)) + min;
-            };
-
-            async function train(model, data, fitCallbacks) {
-                const BATCH_SIZE = parseInt(document.getElementById('batchsize').value);
-                const trainDataSize = parseInt(document.getElementById('trainDataSize').value);
-                const testDataSize = parseInt(document.getElementById('testDataSize').value);
-                const rotatemax = parseInt(document.getElementById('rotatemax').value);
-                const rotatemin = parseInt(document.getElementById('rotatemin').value);
-                const dt = await data.nextTrainBatch(trainDataSize);
-                const [trainXs, trainYs] = tf.tidy(() => {
-                    return [dt.xs.reshape([trainDataSize, imgW, imgH, channel]), dt.labels];
-                });
-                const d = await data.nextTestBatch(testDataSize);
-                const [testXs, testYs] = tf.tidy(() => {
-                    return [d.xs.reshape([testDataSize, imgW, imgH, channel]), d.labels];
-                });
-                var LEARNING_RATE = parseFloat(document.getElementById('learningrate').value);
-                var optimizer = tf.train.sgd(LEARNING_RATE);
-                var optimizertype = document.getElementById('optimizer').value;
-                switch (optimizertype) {
-                    case 'sgd':
-                        optimizer = tf.train.sgd(LEARNING_RATE);
-                        break;
-                    case 'momentum':
-                        optimizer = tf.train.momentum(LEARNING_RATE, 0.9, true);
-                        break;
-                    case 'rmsprop':
-                        const decay = 1 / parseInt(document.getElementById('epochs').value);
-                        optimizer = tf.train.momentum(LEARNING_RATE, decay, 0.9, null, false);
-                        break;
-                    case 'adam':
-                        optimizer = tf.train.momentum(LEARNING_RATE, 0.9, 0.99, null);
-                        break;
-
-                }
-                model.compile({
-                    optimizer: optimizer,
-                    loss: 'categoricalCrossentropy',
-                    metrics: ['accuracy']
-                });
-                return model.fit(trainXs, trainYs, {
-                    batchSize: BATCH_SIZE,
-                    validationData: [testXs, testYs],
-                    epochs: parseInt(document.getElementById('epochs').value),
-                    shuffle: true,
-                    callbacks: fitCallbacks
-                });
-            }
-
-            async function watchTraining() {
-                document.querySelector('#show-all').disabled = false;
-                document.querySelector('#savemodel').disabled = false;
-                document.querySelector('#downloadmodel').disabled = false;
-                const visorInstance = tfvis.visor();
-                if (!visorInstance.isOpen()) {
-                    visorInstance.toggle();
-                }
-                const metrics = ['loss', 'val_loss', 'acc', 'val_acc'];
-                const container = {
-                    name: 'show.fitCallbacks',
-                    tab: 'Training',
-                    styles: {
-                        height: '1000px'
-                    }
-                };
-                const callbacks = tfvis.show.fitCallbacks(container, metrics);
-                return train(model, data, callbacks);
-            }
-            document.querySelector('#start-training-1').addEventListener('click', () => watchTraining());
-
-            async function showTrainingHistory() {
-                const visorInstance = tfvis.visor();
-                if (!visorInstance.isOpen()) {
-                    visorInstance.toggle();
-                }
-                const trainingHistory = await train(model, data);
-                tfvis.show.history({
-                    name: 'Training History',
-                    tab: 'Training'
-                }, trainingHistory, ['loss', 'val_loss', 'acc', 'val_acc']);
-            }
-            document.querySelector('#start-training-2').addEventListener('click', () => showTrainingHistory());
-
-            const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-
-            function doPrediction(testDataSize = 500) {
-                const testData = data.nextTestBatch(testDataSize);
-                const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
-                const labels = testData.labels.argMax([-1]);
-                const preds = model.predict(testxs).argMax([-1]);
-                testxs.dispose();
-                return [preds, labels];
-            }
-
-            async function showAccuracy() {
-                const [preds, labels] = doPrediction();
-                const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
-                const container = {
-                    name: 'Accuracy',
-                    tab: 'Evaluation'
-                };
-                tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
-                labels.dispose();
-            }
-
-            async function showConfusion() {
-                const [preds, labels] = doPrediction();
-                const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
-                const container = {
-                    name: 'Confusion Matrix',
-                    tab: 'Evaluation'
-                };
-                tfvis.render.confusionMatrix(container, {
-                    values: confusionMatrix,
-                    tickLabels: classNames
-                });
-                labels.dispose();
-            }
-
-            async function showAll() {
-                const visorInstance = tfvis.visor();
-                if (!visorInstance.isOpen()) {
-                    visorInstance.toggle();
-                }
-                //const [preds, labels] = doPrediction();
-                testDataSize = parseInt(document.getElementById('testDataSize').value);
-                const testData = await data.nextTestBatch(testDataSize);
-                const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
-                const labels = testData.labels.argMax([-1]);
-                const preds = model.predict(testxs).argMax([-1]);
-
-                const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
-                const container = {
-                    name: 'Accuracy',
-                    tab: 'Evaluation'
-                };
-                tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
-                const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
-                const container2 = {
-                    name: 'Confusion Matrix',
-                    tab: 'Evaluation'
-                };
-                tfvis.render.confusionMatrix(container2, {
-                    values: confusionMatrix,
-                    tickLabels: classNames
-                });
-                labels.dispose();
-            }
-            document.querySelector('#show-all').addEventListener('click', () => showAll());
-
-            async function webcampredict() {
-                document.getElementById("predictA").innerHTML = "";
-                var canvas = document.createElement('canvas');
-                canvas.width = imgW;
-                canvas.height = imgH;
-                var canvasvideo = document.getElementById('videocanvas2');
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
-                var testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
-                var preds = await model.predict(testxs).argMax([-1]).data();
-                document.getElementById("predictA").innerHTML = classNames[preds];
-                preds.dispose();
-            }
-
-            function getLayervalue(i) {
-                const container = {
-                    name: 'Model Summary',
-                    tab: 'Model Inspection'
-                };
-                tfvis.show.layer(container, model.getLayer(undefined, i));
-            }
-            function modelinspection() {
-                const visorInstance = tfvis.visor();
-                if (!visorInstance.isOpen()) {
-                    visorInstance.toggle();
-                }
-                const container = {
-                    name: 'Model Summary',
-                    tab: 'Model Inspection'
-                };
-                tfvis.show.modelSummary(container, model);
-                var maxlayerindex = 0;
-                try {
-                    for (i = 0; i < 10; i++) {
-                        if (model.getLayer(undefined, i).name == "") {
-                            break;
-                        }
-                    }
-                }
-                catch (err) {
-                    maxlayerindex = (i - 1);
-                }
-                tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
-            }
-            const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
-            async function saveModelLocally(model) {
-                const saveResult = await model.save(LOCAL_MODEL_URL);
-            }
-            async function downloadModelLocally(model) {
-                const saveResult = await model.save('downloads://mymodel');
-            }
-            async function loadModelLocally() {
-                model = await tf.loadLayersModel(LOCAL_MODEL_URL);
-            }
-            async function UploadModelFile() {
-                document.querySelector('#uploadmodel').disabled = true;
-                document.querySelector('#uploadweight').disabled = true;
-                document.querySelector('#UploadModelFile').disabled = true;
-                document.querySelector('#loadModelLocally').disabled = true;
-                const uploadJSONInput = document.getElementById('uploadmodel');
-                const uploadWeightsInput = document.getElementById('uploadweight');
-                model = await tf.loadLayersModel(tf.io.browserFiles(
-                    [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
-            }
-            function test() {
-                var file2 = document.getElementById("uploadlabel").files[0];
-                var reader2 = new FileReader();
-                var labelsResponse = 0;
-                //reader2.readAsArrayBuffer(file2);
-                reader2.readAsDataURL(file2);
-                reader2.onload = function (e) {
-                    //document.getElementById('todownload').href = this.result;
-                    newlabels = _base64ToArrayBuffer(this.result.slice(37, this.result.length));
-                    //alert(rebuildlabel(newlabels));
-                    //alert(getOnehotlabel(rebuildlabel(newlabels)));
-                    document.getElementById('todownload').href = 'data:application/octet-stream;base64,' + _arrayBufferToBase64(newlabels.buffer);
-                }
-            }
-            function _base64ToArrayBuffer(base64) {
-                var binary_string = window.atob(base64);
-                var len = binary_string.length;
-                var bytes = new Uint8Array(len);
-                for (var i = 0; i < len; i++) {
-                    bytes[i] = binary_string.charCodeAt(i);
-                }
-                return bytes; //buffer
-            }
-            function _arrayBufferToBase64(buffer) {
-                var binary = '';
-                var bytes = new Uint8Array(buffer);
-                var len = bytes.byteLength;
-                for (var i = 0; i < len; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                }
-                return window.btoa(binary);
-            }
-            function rebuildlabel(onehotlabels) {
-                var classes = parseInt(document.getElementById('totalclass').value);
-                var labelarray = new Array();
-                for (j = 0; j < onehotlabels.length / classes; j++) {
-                    for (i = 0; i < classes; i++) {
-                        if (onehotlabels[j * classes + i] == 1) {
-                            labelarray[j] = i;
-                        }
-                    }
-                }
-                return labelarray
-            }
-            function getOnehotlabel(labels) {
-                var classes = parseInt(document.getElementById('totalclass').value);
-                var onehotarray = new Array();
-                for (j = 0; j < labels.length; j++) {
-                    for (i = 0; i < classes; i++) {
-                        if (i != labels[j]) {
-                            onehotarray[classes * j + i] = 0;
-                        } else {
-                            onehotarray[classes * j + i] = 1;
-                        }
-                    }
-                }
-                return onehotarray
-            }
-            function getonehotfile() {
-                var classes = parseInt(document.getElementById('totalclass').value);
-                var labels = document.getElementById('labels').value.split(",");
-                var onehotarray = new Array();
-                if (document.getElementById('totalclass').value == "" || document.getElementById('labels').value == "") {
-                    alert('class or labels no data');
-                } else {
-                    if (document.getElementById('labels').value.substr(document.getElementById('labels').value.length - 1, 1) == "," || document.getElementById('labels').value.substr(0, 1) == ",") {
-                        alert("','can't at two tails of label string");
-                    } else {
-                        alert(Math.max.apply(null, labels));
-                        if (Math.max.apply(null, labels) >= classes) {
-                            alert('max label is out of classes');
-                        } else {
-                            for (j = 0; j < labels.length; j++) {
-                                for (i = 0; i < classes; i++) {
-                                    if (i != labels[j]) {
-                                        onehotarray[classes * j + i] = 0;
-                                    } else {
-                                        onehotarray[classes * j + i] = 1;
-                                    }
-                                }
-                            }
-                            //alert(onehotarray);
-                            //window.open('data:application/octet-stream;base64,' + _arrayBufferToBase64(onehotarray), 'Download');
-                            var a = document.createElement('A');
-                            a.href = 'data:application/octet-stream;base64,' + _arrayBufferToBase64(onehotarray);
-                            a.download = "labels_uint8";
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a);
-                        }
-                    }
-                }
-            }
-            //document.getElementById('testcanvas')
-            function objrotate(image) {
-                const canvas = document.createElement('canvas'); //document.getElementById('testcanvas')
-                canvas.width = 28;
-                canvas.height = 28;
+            for (let i = 0; i < batchSize; i++) {
+                const idx = index();
+                var image = data[0].slice(idx * IMAGE_SIZE, idx * IMAGE_SIZE + IMAGE_SIZE);
                 var degree = getRandom(rotatemin, rotatemax);
-                const ctx = canvas.getContext('2d');
-                ctx.save();
-                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                if (channel == 1) {
-                    for (let j = 0; j < image.length * 4; j++) {
-                        // Gray channel.
-                        imageData.data[4 * j] = (image[j] * 255).toFixed(0);
-                        imageData.data[4 * j + 1] = (image[j] * 255).toFixed(0);
-                        imageData.data[4 * j + 2] = (image[j] * 255).toFixed(0);
-                        imageData.data[4 * j + 3] = 1;
-                    }
-                } else {
-                    for (let j = 0; j < image.length / 3 * 4; j++) {
-                        // All channel.
-                        imageData[3 * j + k] = image[j * 4 + k];
+                await tf.browser.toPixels(tf.tensor1d(image).reshape([imgW, imgH, channel]), canvas);
 
-                    }
+                if (rotateboolean == "t") {
+                    var degree = getRandom(rotatemin, rotatemax);
+                    const ctx = canvas.getContext('2d');
+                    ctx.translate(canvas.width / 2, canvas.height / 2);
+                    ctx.rotate(degree * Math.PI / 180);
+                    ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
                 }
-                ctx.putImageData(imageData, 0, 0);
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.rotate(90 * Math.PI / 180);
-                ctx.drawImage(canvas, -canvas.width / 2, -canvas.width / 2);
-                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const canvas2 = document.createElement('canvas');
+                //const canvas2 = document.getElementById('testcanvas');
+                canvas2.width = imgW;
+                canvas2.height = imgH;
+                canvas2.style = 'margin: 4px;';
+                const ctx2 = canvas2.getContext('2d');
+                ctx2.fillStyle = "white";
+                ctx2.fillRect(0, 0, canvas.width, canvas.height);
+                var scale = 1;
+                if (scaleboolean == "t") {
+                    var maxscale = parseFloat(document.getElementById('scalemax').value);
+                    var minscale = parseFloat(document.getElementById('scalemin').value);
+                    var scale = Math.random() * (maxscale - minscale) + minscale;
+                }
+                var shifthor = 0;
+                var shiftver = 0;
+                if (shiftboolean == "t") {
+                    var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
+                    var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
+                    shifthor *= canvas.width;
+                    shiftver *= canvas.height;
+                }
+                ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
+
+                var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
                 if (channel == 1) {
                     for (let j = 0; j < imageData.data.length / 4; j++) {
                         //Gray channel.
-                        image[j] = imageData.data[j * 4] / 255;
+                        var gray = imageData.data[j * 4];
+                        if (channelshiftboolean == "t"){
+                            gray = (gray + getRandom((0 - channelshift), channelshift)) / 255;
+                            if (gray < 0) gray = 0;
+                            if (gray > 1) gray = 1;
+                            image[j] = gray;
+                        } else {
+                            image[j] = imageData.data[j * 4] / 255;
+                        }
                     }
                 } else {
                     for (let j = 0; j < imageData.data.length / 4; j++) {
-                        //All channel.
-                        for (let k = 0; k < 3; k++) {
-                            image[3 * j + k] = imageData.data[j * 4 + k] / 255;
+                        // All channel.
+                        var red = imageData.data[j * 4];
+                        var green = imageData.data[j * 4 + 1];
+                        var blue = imageData.data[j * 4 + 2];
+                        if (channelshiftboolean == "t") {
+                            red = (red + getRandom((0 - channelshift), channelshift)) / 255;
+                            green = (green + getRandom((0 - channelshift), channelshift)) / 255;
+                            blue = (blue + getRandom((0 - channelshift), channelshift)) / 255;
+                            if (red < 0) red = 0;
+                            if (red > 1) red = 1;
+                            if (green < 0) green = 0;
+                            if (green > 1) green = 1;
+                            if (blue < 0) blue = 0;
+                            if (blue > 1) blue = 1;
+                            image[3 * j] = red;
+                            image[3 * j + 1] = green;
+                            image[3 * j + 2] = blue;
+                        } else {
+                            image[3 * j] = red;
+                            image[3 * j + 1] = green;
+                            image[3 * j + 2] = blue;
                         }
                     }
                 }
-                return image
+                    
+                batchImagesArray.set(image, i * IMAGE_SIZE);
+                const label = data[1].slice(idx * NUM_CLASSES, idx * NUM_CLASSES + NUM_CLASSES);
+                batchLabelsArray.set(label, i * NUM_CLASSES);
             }
-        </script>
+            const xs = await tf.tensor2d(batchImagesArray, [batchSize, IMAGE_SIZE]);
+            const labels = tf.tensor2d(batchLabelsArray, [batchSize, NUM_CLASSES]);
+            return {
+                xs,
+                labels
+            };
+        }
+
+        function rotatechange() {
+            const rotateboolean = document.getElementById('rotateboolean').value;
+            const rotatemax = parseInt(document.getElementById('rotatemax').value);
+            const rotatemin = parseInt(document.getElementById('rotatemin').value);
+            if (rotateboolean == "t") {
+                if (eval(rotatemax - rotatemin) > 360) { alert('degrees between rotate max and min out of 360'); }
+                if (rotatemax < rotatemin) { alert('rotate max degree can not smaller than min'); }
+            }
+        }
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        };
+
+        async function train(model, data, fitCallbacks) {
+            const BATCH_SIZE = parseInt(document.getElementById('batchsize').value);
+            const trainDataSize = parseInt(document.getElementById('trainDataSize').value);
+            const testDataSize = parseInt(document.getElementById('testDataSize').value);
+            const rotatemax = parseInt(document.getElementById('rotatemax').value);
+            const rotatemin = parseInt(document.getElementById('rotatemin').value);
+            const dt = await data.nextTrainBatch(trainDataSize);
+            const [trainXs, trainYs] = tf.tidy(() => {
+                return [dt.xs.reshape([trainDataSize, imgW, imgH, channel]), dt.labels];
+            });
+            const d = await data.nextTestBatch(testDataSize);
+            const [testXs, testYs] = tf.tidy(() => {
+                return [d.xs.reshape([testDataSize, imgW, imgH, channel]), d.labels];
+            });
+            var LEARNING_RATE = parseFloat(document.getElementById('learningrate').value);
+            var optimizer = tf.train.sgd(LEARNING_RATE);
+            var optimizertype = document.getElementById('optimizer').value;
+            switch (optimizertype) {
+                case 'sgd':
+                    optimizer = tf.train.sgd(LEARNING_RATE);
+                    break;
+                case 'momentum':
+                    optimizer = tf.train.momentum(LEARNING_RATE, 0.9, true);
+                    break;
+                case 'rmsprop':
+                    const decay = 1 / parseInt(document.getElementById('epochs').value);
+                    optimizer = tf.train.momentum(LEARNING_RATE, decay, 0.9, null, false);
+                    break;
+                case 'adam':
+                    optimizer = tf.train.momentum(LEARNING_RATE, 0.9, 0.99, null);
+                    break;
+
+            }
+            model.compile({
+                optimizer: optimizer,
+                loss: 'categoricalCrossentropy',
+                metrics: ['accuracy']
+            });
+            return model.fit(trainXs, trainYs, {
+                batchSize: BATCH_SIZE,
+                validationData: [testXs, testYs],
+                epochs: parseInt(document.getElementById('epochs').value),
+                shuffle: true,
+                callbacks: fitCallbacks
+            });
+        }
+
+        async function watchTraining() {
+            document.querySelector('#show-all').disabled = false;
+            document.querySelector('#savemodel').disabled = false;
+            document.querySelector('#downloadmodel').disabled = false;
+            const visorInstance = tfvis.visor();
+            if (!visorInstance.isOpen()) {
+                visorInstance.toggle();
+            }
+            const metrics = ['loss', 'val_loss', 'acc', 'val_acc'];
+            const container = {
+                name: 'show.fitCallbacks',
+                tab: 'Training',
+                styles: {
+                    height: '1000px'
+                }
+            };
+            const callbacks = tfvis.show.fitCallbacks(container, metrics);
+            return train(model, data, callbacks);
+        }
+        document.querySelector('#start-training-1').addEventListener('click', () => watchTraining());
+
+        async function showTrainingHistory() {
+            const visorInstance = tfvis.visor();
+            if (!visorInstance.isOpen()) {
+                visorInstance.toggle();
+            }
+            const trainingHistory = await train(model, data);
+            tfvis.show.history({
+                name: 'Training History',
+                tab: 'Training'
+            }, trainingHistory, ['loss', 'val_loss', 'acc', 'val_acc']);
+        }
+        document.querySelector('#start-training-2').addEventListener('click', () => showTrainingHistory());
+
+        const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+
+        function doPrediction(testDataSize = 500) {
+            const testData = data.nextTestBatch(testDataSize);
+            const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
+            const labels = testData.labels.argMax([-1]);
+            const preds = model.predict(testxs).argMax([-1]);
+            testxs.dispose();
+            return [preds, labels];
+        }
+
+        async function showAccuracy() {
+            const [preds, labels] = doPrediction();
+            const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
+            const container = {
+                name: 'Accuracy',
+                tab: 'Evaluation'
+            };
+            tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
+            labels.dispose();
+        }
+
+        async function showConfusion() {
+            const [preds, labels] = doPrediction();
+            const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+            const container = {
+                name: 'Confusion Matrix',
+                tab: 'Evaluation'
+            };
+            tfvis.render.confusionMatrix(container, {
+                values: confusionMatrix,
+                tickLabels: classNames
+            });
+            labels.dispose();
+        }
+
+        async function showAll() {
+            const visorInstance = tfvis.visor();
+            if (!visorInstance.isOpen()) {
+                visorInstance.toggle();
+            }
+            //const [preds, labels] = doPrediction();
+            testDataSize = parseInt(document.getElementById('testDataSize').value);
+            const testData = await data.nextTestBatch(testDataSize);
+            const testxs = testData.xs.reshape([testDataSize, imgW, imgH, channel]);
+            const labels = testData.labels.argMax([-1]);
+            const preds = model.predict(testxs).argMax([-1]);
+
+            const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
+            const container = {
+                name: 'Accuracy',
+                tab: 'Evaluation'
+            };
+            tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
+            const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+            const container2 = {
+                name: 'Confusion Matrix',
+                tab: 'Evaluation'
+            };
+            tfvis.render.confusionMatrix(container2, {
+                values: confusionMatrix,
+                tickLabels: classNames
+            });
+            labels.dispose();
+        }
+        document.querySelector('#show-all').addEventListener('click', () => showAll());
+
+        async function webcampredict() {
+            document.getElementById("predictA").innerHTML = "";
+            var canvas = document.createElement('canvas');
+            canvas.width = imgW;
+            canvas.height = imgH;
+            var canvasvideo = document.getElementById('videocanvas2');
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
+            var testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
+            var preds = await model.predict(testxs).argMax([-1]).data();
+            document.getElementById("predictA").innerHTML = classNames[preds];
+            preds.dispose();
+        }
+
+        function getLayervalue(i) {
+            const container = {
+                name: 'Model Summary',
+                tab: 'Model Inspection'
+            };
+            tfvis.show.layer(container, model.getLayer(undefined, i));
+        }
+        function modelinspection() {
+            const visorInstance = tfvis.visor();
+            if (!visorInstance.isOpen()) {
+                visorInstance.toggle();
+            }
+            const container = {
+                name: 'Model Summary',
+                tab: 'Model Inspection'
+            };
+            tfvis.show.modelSummary(container, model);
+            var maxlayerindex = 0;
+            try {
+                for (i = 0; i < 10; i++) {
+                    if (model.getLayer(undefined, i).name == "") {
+                        break;
+                    }
+                }
+            }
+            catch (err) {
+                maxlayerindex = (i - 1);
+            }
+            tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
+        }
+        const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
+        async function saveModelLocally(model) {
+            const saveResult = await model.save(LOCAL_MODEL_URL);
+        }
+        async function downloadModelLocally(model) {
+            const saveResult = await model.save('downloads://mymodel');
+        }
+        async function loadModelLocally() {
+            model = await tf.loadLayersModel(LOCAL_MODEL_URL);
+        }
+        async function UploadModelFile() {
+            document.querySelector('#uploadmodel').disabled = true;
+            document.querySelector('#uploadweight').disabled = true;
+            document.querySelector('#UploadModelFile').disabled = true;
+            document.querySelector('#loadModelLocally').disabled = true;
+            const uploadJSONInput = document.getElementById('uploadmodel');
+            const uploadWeightsInput = document.getElementById('uploadweight');
+            model = await tf.loadLayersModel(tf.io.browserFiles(
+                [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+        }
+        function test() {
+            var file2 = document.getElementById("uploadlabel").files[0];
+            var reader2 = new FileReader();
+            var labelsResponse = 0;
+            //reader2.readAsArrayBuffer(file2);
+            reader2.readAsDataURL(file2);
+            reader2.onload = function (e) {
+                //document.getElementById('todownload').href = this.result;
+                newlabels = _base64ToArrayBuffer(this.result.slice(37, this.result.length));
+                //alert(rebuildlabel(newlabels));
+                //alert(getOnehotlabel(rebuildlabel(newlabels)));
+                document.getElementById('todownload').href = 'data:application/octet-stream;base64,' + _arrayBufferToBase64(newlabels.buffer);
+            }
+        }
+        function _base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes; //buffer
+        }
+        function _arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+        function rebuildlabel(onehotlabels) {
+            var classes = parseInt(document.getElementById('totalclass').value);
+            var labelarray = new Array();
+            for (j = 0; j < onehotlabels.length / classes; j++) {
+                for (i = 0; i < classes; i++) {
+                    if (onehotlabels[j * classes + i] == 1) {
+                        labelarray[j] = i;
+                    }
+                }
+            }
+            return labelarray
+        }
+        function getOnehotlabel(labels) {
+            var classes = parseInt(document.getElementById('totalclass').value);
+            var onehotarray = new Array();
+            for (j = 0; j < labels.length; j++) {
+                for (i = 0; i < classes; i++) {
+                    if (i != labels[j]) {
+                        onehotarray[classes * j + i] = 0;
+                    } else {
+                        onehotarray[classes * j + i] = 1;
+                    }
+                }
+            }
+            return onehotarray
+        }
+        function getonehotfile() {
+            var classes = parseInt(document.getElementById('totalclass').value);
+            var labels = document.getElementById('labels').value.split(",");
+            var onehotarray = new Array();
+            if (document.getElementById('totalclass').value == "" || document.getElementById('labels').value == "") {
+                alert('class or labels no data');
+            } else {
+                if (document.getElementById('labels').value.substr(document.getElementById('labels').value.length - 1, 1) == "," || document.getElementById('labels').value.substr(0, 1) == ",") {
+                    alert("','can't at two tails of label string");
+                } else {
+                    alert(Math.max.apply(null, labels));
+                    if (Math.max.apply(null, labels) >= classes) {
+                        alert('max label is out of classes');
+                    } else {
+                        for (j = 0; j < labels.length; j++) {
+                            for (i = 0; i < classes; i++) {
+                                if (i != labels[j]) {
+                                    onehotarray[classes * j + i] = 0;
+                                } else {
+                                    onehotarray[classes * j + i] = 1;
+                                }
+                            }
+                        }
+                        //alert(onehotarray);
+                        //window.open('data:application/octet-stream;base64,' + _arrayBufferToBase64(onehotarray), 'Download');
+                        var a = document.createElement('A');
+                        a.href = 'data:application/octet-stream;base64,' + _arrayBufferToBase64(onehotarray);
+                        a.download = "labels_uint8";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                }
+            }
+        }
+        //document.getElementById('testcanvas')
+        function objrotate(image) {
+            const canvas = document.createElement('canvas'); //document.getElementById('testcanvas')
+            canvas.width = 28;
+            canvas.height = 28;
+            var degree = getRandom(rotatemin, rotatemax);
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            if (channel == 1) {
+                for (let j = 0; j < image.length * 4; j++) {
+                    // Gray channel.
+                    imageData.data[4 * j] = (image[j] * 255).toFixed(0);
+                    imageData.data[4 * j + 1] = (image[j] * 255).toFixed(0);
+                    imageData.data[4 * j + 2] = (image[j] * 255).toFixed(0);
+                    imageData.data[4 * j + 3] = 1;
+                }
+            } else {
+                for (let j = 0; j < image.length / 3 * 4; j++) {
+                    // All channel.
+                    imageData[3 * j + k] = image[j * 4 + k];
+
+                }
+            }
+            ctx.putImageData(imageData, 0, 0);
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.drawImage(canvas, -canvas.width / 2, -canvas.width / 2);
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            if (channel == 1) {
+                for (let j = 0; j < imageData.data.length / 4; j++) {
+                    //Gray channel.
+                    image[j] = imageData.data[j * 4] / 255;
+                }
+            } else {
+                for (let j = 0; j < imageData.data.length / 4; j++) {
+                    //All channel.
+                    for (let k = 0; k < 3; k++) {
+                        image[3 * j + k] = imageData.data[j * 4 + k] / 255;
+                    }
+                }
+            }
+            return image
+        }
+    </script>
     </section><br />
     <b>Step7:</b><br />
     Test on webcam!!!
@@ -685,7 +716,10 @@
             canvasvideo.getContext('2d').drawImage(canvas, 0, 0, rectlen, rectlen, 0, 0, rectlen, rectlen);
             screenshotButton.click();
         };
+        //zoom
         screenshotButton.onclick = function () {
+            const channelshiftboolean = document.getElementById('channelshiftboolean').value;
+            const channelshift = parseInt(document.getElementById('channelshift').value);
             const canvas = document.createElement('canvas');
             canvas.width = canvasvideo.width;
             canvas.height = canvasvideo.height;
@@ -700,9 +734,51 @@
                 y = ((canvas.height - canvas.width) / 2).toFixed(0);
             }
             canvas.getContext('2d').drawImage(canvasvideo, 0 + x, 0 + y, rectlen, rectlen, 0, 0, rectlen, rectlen);
+            //zoomcanvas
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
+
+            var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+            if (channel == 1) {
+                for (let j = 0; j < imageData.data.length / 4; j++) {
+                    //Gray channel.
+                    var red = imageData.data[j * 4];
+                    var green = imageData.data[j * 4 + 1];
+                    var blue = imageData.data[j * 4 + 2];
+                    var gray = (red * 299 + green * 587 + blue * 114 + 500) / 1000;
+                    if (channelshiftboolean == "t") {
+                        gray = (gray + getRandom((0 - channelshift), channelshift));
+                    }
+                    if (gray < 0) gray = 0;
+                    if (gray > 255) gray = 255;
+                    imageData.data[j * 4] = gray;
+                    imageData.data[j * 4 + 1] = gray;
+                    imageData.data[j * 4 + 2] = gray;
+                }
+            } else {
+                for (let j = 0; j < imageData.data.length / 4; j++) {
+                    // All channel.
+                    var red = imageData.data[j * 4];
+                    var green = imageData.data[j * 4 + 1];
+                    var blue = imageData.data[j * 4 + 2];
+                    if (channelshiftboolean == "t") {
+                        red = (red + getRandom((0 - channelshift), channelshift));
+                        green = (green + getRandom((0 - channelshift), channelshift));
+                        blue = (blue + getRandom((0 - channelshift), channelshift));
+                    }
+                    if (red < 0) red = 0;
+                    if (red > 255) red = 255;
+                    if (green < 0) green = 0;
+                    if (green > 255) green = 255;
+                    if (blue < 0) blue = 0;
+                    if (blue > 255) blue = 255;
+                    imageData.data[j * 4] = red;
+                    imageData.data[j * 4 + 1] = green;
+                    imageData.data[j * 4 + 2] = blue;
+                }
+            }
+            canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         };
     </script>
     <script src="mnist.58d86013.js"></script>
