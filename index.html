@@ -29,7 +29,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>76Visualizing training with tfjs-vis</h1>
+    <h1>77Visualizing training with tfjs-vis</h1>
     <section>
     <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
     <b>Step1:</b><br />
@@ -793,16 +793,24 @@
             var searchlen = (pixelArray.length * 0.05).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
-            alert(pixelArray);
             for (i = 0; i < searchlen; i++){
-
                 pxAmin += pixelArray[i];
             }
             for (i = (pixelArray.length - searchlen); i < pixelArray.length; i++) {
                 pxAmax += pixelArray[i];
             }
+            pxAmin /= searchlen;
             pxAmax /= searchlen;
-
+            alert(pxAmin + ", " + pxAmax);
+            for (let j = 0; j < imageData.data.length / 4; j++) {
+                for (let i = 0; i < 3; i++) {
+                    var pixel = imageData.data[4 * j + i];
+                    pixel = (pixel - pxAmin) * (pxAmax - pxAmin);
+                    if (pixel < 0) pixel = 0;
+                    if (pixel > 255) pixel = 255;
+                    imageData.data[4 * j + i] = pixel;
+                }
+            }
             canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         }
     </script>
