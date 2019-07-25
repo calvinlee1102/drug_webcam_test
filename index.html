@@ -824,10 +824,10 @@
             var pixelArray = new Array();
             for (let j = 0; j < imageData.data.length / 4; j++) {
                 for (let i = 0; i < 3; i++) {
-                    pixelArray[3 * j + i] = imageData.data[4 * j + i];
+                    pixelArray[3 * j + i] = parseInt(imageData.data[4 * j + i]);
                 }
             }
-            pixelArray = pixelArray.sort();
+            pixelArray.sort();
             var searchlen = (pixelArray.length * imgalpha).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
@@ -839,7 +839,6 @@
             }
             pxAmin /= searchlen;
             pxAmax /= searchlen;
-            alert("max=" + pxAmax.toFixed(0) + " ,min=" + pxAmin.toFixed(0));
             for (let j = 0; j < imageData.data.length / 4; j++) {
                 for (let i = 0; i < 3; i++) {
                     var pixel = imageData.data[4 * j + i];
