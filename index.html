@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="tufte.3682e6f8.css">
@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>82Visualizing training with tfjs-vis</h1>
+    <h1>83Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -178,7 +178,7 @@
                 const scaleboolean = document.getElementById('scaleboolean').value;
                 const shiftboolean = document.getElementById('shiftboolean').value;
                 const channelshiftboolean = document.getElementById('channelshiftboolean').value;
-                var channelshift = parseInt(document.getElementById('channelshift').value);
+                const channelshiftvalue = parseInt(document.getElementById('channelshift').value);
                 const channelnoiseboolean = document.getElementById('channelnoiseboolean').value;
                 const channelnoise = parseInt(document.getElementById('channelnoise').value);
                 const canvas = document.createElement('canvas');
@@ -224,17 +224,22 @@
                     ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
 
                     var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                    if (channelshiftboolean == "t") {
+                        var channelshift = getRandom((0 - channelshiftvalue), channelshiftvalue);
+                    } else {
+                        var channelshift = 0;
+                    }
                     if (channel == 1) {
                         for (let j = 0; j < imageData.data.length / 4; j++) {
                             //Gray channel.
                             var gray = imageData.data[j * 4];
                             if (channelnoiseboolean == "t") {
-                                gray = (gray + getRandom((0 - channelnoise), channelnoise)) / 255;
+                                gray = (gray + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
                                 if (gray < 0) gray = 0;
                                 if (gray > 1) gray = 1;
                                 image[j] = gray;
                             } else {
-                                gray = (imageData.data[j * 4]) / 255;
+                                gray = (imageData.data[j * 4] + channelshift) / 255;
                                 if (gray < 0) gray = 0;
                                 if (gray > 1) gray = 1;
                                 image[j] = gray;
@@ -247,9 +252,9 @@
                             var green = imageData.data[j * 4 + 1];
                             var blue = imageData.data[j * 4 + 2];
                             if (channelnoiseboolean == "t") {
-                                red = (red + getRandom((0 - channelnoise), channelnoise)) / 255;
-                                green = (green + getRandom((0 - channelnoise), channelnoise)) / 255;
-                                blue = (blue + getRandom((0 - channelnoise), channelnoise)) / 255;
+                                red = (red + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                                green = (green + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                                blue = (blue + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
                                 if (red < 0) red = 0;
                                 if (red > 1) red = 1;
                                 if (green < 0) green = 0;
@@ -260,9 +265,9 @@
                                 image[3 * j + 1] = green;
                                 image[3 * j + 2] = blue;
                             } else {
-                                var red = (imageData.data[j * 4]) / 255;
-                                var green = (imageData.data[j * 4 + 1]) / 255;
-                                var blue = (imageData.data[j * 4 + 2]) / 255;
+                                var red = (imageData.data[j * 4] + channelshift) / 255;
+                                var green = (imageData.data[j * 4 + 1] + channelshift) / 255;
+                                var blue = (imageData.data[j * 4 + 2] + channelshift) / 255;
                                 if (red < 0) red = 0;
                                 if (red > 1) red = 1;
                                 if (green < 0) green = 0;
