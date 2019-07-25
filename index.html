@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>85Visualizing training with tfjs-vis</h1>
+    <h1>86Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -768,6 +768,7 @@
         };
         //zoom
         screenshotButton.onclick = function () {
+            var channel = parseInt(document.getElementById('channel').value);
             const canvas = document.createElement('canvas');
             canvas.width = canvasvideo.width;
             canvas.height = canvasvideo.height;
