@@ -785,6 +785,7 @@
             //zoomcanvas
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
+            canvasvideo2.getContext('2d').drawImage(canvas,0, 0);
             imagebalance();
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
@@ -815,10 +816,9 @@
                 }
             }
             canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
-            
         };
         async function imagebalance() {
-            var imageData = canvasvideo.getContext('2d').getImageData(0, 0, canvasvideo.width, canvasvideo.height);
+            var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvasvideo2.width, canvasvideo2.height);
             var pixelArray = new Array();
             for (let j = 0; j < imageData.data.length / 4; j++) {
                 for (let i = 0; i < 3; i++) {
@@ -846,7 +846,7 @@
                     imageData.data[4 * j + i] = pixel;
                 }
             }
-            await canvasvideo.getContext('2d').putImageData(imageData, 0, 0);
+            await canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         }
     </script>
     <script src="mnist.58d86013.js"></script>
