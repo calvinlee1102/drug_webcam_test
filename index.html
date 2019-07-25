@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>88Visualizing training with tfjs-vis</h1>
+    <h1>89Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -827,7 +827,7 @@
                     pixelArray[3 * j + i] = imageData.data[4 * j + i];
                 }
             }
-            pixelArray.sort();
+            pixelArray = pixelArray.sort();
             var searchlen = (pixelArray.length * imgalpha).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
@@ -837,7 +837,6 @@
             for (i = (pixelArray.length - searchlen); i < pixelArray.length; i++) {
                 pxAmax += pixelArray[i];
             }
-            alert("omax=" + pxAmax.toFixed(0) + " ,omin=" + pxAmin.toFixed(0));
             pxAmin /= searchlen;
             pxAmax /= searchlen;
             alert("max=" + pxAmax.toFixed(0) + " ,min=" + pxAmin.toFixed(0));
