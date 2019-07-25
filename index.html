@@ -679,7 +679,7 @@
         <!--style="text-align:center;"-->
         <button id="capture-video" onclick="initCameraStream();">Capture Webcam Video</button><br />
         <video id="streamvideo" class="videostream" autoplay playsinline></video><br /> <!--style="visibility:hidden;height:0px;width:0px;"-->
-        <button id="capture-button">Take a picture</button>
+        <button id="capture-button">Take a picture</button> imgalpha=<input id="imgalpha" value="0.1" style="width:50px;" /><br />
         <canvas id="videocanvas" style="visibility:hidden;height:0px;width:0px;"></canvas><br />
         <canvas id="videocanvas2"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">Zoom In</button>
@@ -769,6 +769,7 @@
         //zoom
         screenshotButton.onclick = function () {
             var channel = parseInt(document.getElementById('channel').value);
+            var imgalpha = parseFloat(document.getElementById("imgalpha").value);
             const canvas = document.createElement('canvas');
             canvas.width = canvasvideo.width;
             canvas.height = canvasvideo.height;
@@ -787,7 +788,7 @@
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
             canvasvideo2.getContext('2d').drawImage(canvas,0, 0);
-            imagebalance();
+            imagebalance(imgalpha);
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
@@ -818,7 +819,7 @@
             }
             canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         };
-        async function imagebalance() {
+        async function imagebalance(imgalpha) {
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvasvideo2.width, canvasvideo2.height);
             var pixelArray = new Array();
             for (let j = 0; j < imageData.data.length / 4; j++) {
@@ -827,7 +828,7 @@
                 }
             }
             pixelArray.sort();
-            var searchlen = (pixelArray.length * 0.02).toFixed(0);
+            var searchlen = (pixelArray.length * imgalpha).toFixed(0);
             var pxAmin = 0;
             var pxAmax = 0;
             for (i = 0; i < searchlen; i++) {
