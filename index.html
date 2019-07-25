@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>86Visualizing training with tfjs-vis</h1>
+    <h1>87Visualizing training with tfjs-vis</h1>
     <section>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
@@ -684,7 +684,7 @@
         <canvas id="videocanvas2"></canvas><br />
         <button id="zoomin" onclick="zoom('in')">Zoom In</button>
         <button id="zoomout" onclick="zoom('out')">Zoom Out</button><br />
-        <button id="screenshot-button" style="visibility:hidden;">Take screenshot</button><br />
+        <button id="screenshot-button" style="visibility:hidden;" onclick="showcropimg();">Take screenshot</button><br />
         Predict Label:<a id="predictA" style="margin-left:5px;"></a><br />
         <button id="webcampredict" onclick="webcampredict()">Predict</button>
     </div>
@@ -767,7 +767,7 @@
             screenshotButton.click();
         };
         //zoom
-        screenshotButton.onclick = function () {
+        async function showcropimg() {
             var channel = parseInt(document.getElementById('channel').value);
             var imgalpha = parseFloat(document.getElementById("imgalpha").value);
             const canvas = document.createElement('canvas');
@@ -788,7 +788,7 @@
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
             canvasvideo2.getContext('2d').drawImage(canvas,0, 0);
-            imagebalance(imgalpha);
+            await imagebalance(imgalpha);
             canvasvideo2.getContext('2d').drawImage(canvas, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
@@ -819,7 +819,7 @@
             }
             canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         };
-        async function imagebalance(imgalpha) {
+        function imagebalance(imgalpha) {
             var imageData = canvasvideo2.getContext('2d').getImageData(0, 0, canvasvideo2.width, canvasvideo2.height);
             var pixelArray = new Array();
             for (let j = 0; j < imageData.data.length / 4; j++) {
@@ -848,7 +848,7 @@
                     imageData.data[4 * j + i] = pixel;
                 }
             }
-            await canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
+            canvasvideo2.getContext('2d').putImageData(imageData, 0, 0);
         }
     </script>
     <script src="mnist.58d86013.js"></script>
