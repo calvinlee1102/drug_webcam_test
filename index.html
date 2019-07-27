@@ -500,11 +500,9 @@
                     name: 'Model Summary',
                     tab: 'Model Inspection'
                 };
-                //const input = tf.input({ shape: [5] });
-                //const denseLayer1 = tf.layers.dense({units: 10, activation: 'relu'});
-                //const denseLayer2 = tf.layers.dense({units: 4, activation: 'softmax'});
-                //const output = denseLayer2.apply(denseLayer1.apply(input));
-                //model = tf.model({inputs: input, outputs: output});
+                //model = tf.sequential({ layers: model.layers.slice(0, 12) });
+                //model.add(tf.layers.dense({ units: 6, activation: 'softmax' }));
+                
                 tfvis.show.modelSummary(container, model);
                 var maxlayerindex = 0;
                 try {
@@ -519,6 +517,7 @@
                 }
                 tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
             }
+            
             const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
             async function saveModelLocally(model) {
                 const saveResult = await model.save(LOCAL_MODEL_URL);
