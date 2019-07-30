@@ -31,8 +31,13 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>91Visualizing training with tfjs-vis</h1>
+    <h1>Jarvis Training System</h1>
     <section>
+        Jarvis Model: <input id="uploadvoicemodel" type="file" /><br />
+        Jarvis Weight: <input id="uploadvoiceweight" type="file" /><br />
+        <button onclick="loadjarvis();">Load Jarvis</button><br />
+        Command: <a id="console"></a><br />
+        Status: <a id="status"></a><br />
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
         <button id="make-first-surface">Make a Workshop</button><br />
@@ -502,7 +507,7 @@
                 };
                 //model = tf.sequential({ layers: model.layers.slice(0, 12) });
                 //model.add(tf.layers.dense({ units: 6, activation: 'softmax' }));
-                
+
                 tfvis.show.modelSummary(container, model);
                 var maxlayerindex = 0;
                 try {
@@ -517,7 +522,7 @@
                 }
                 tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
             }
-            
+
             const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
             async function saveModelLocally(model) {
                 const saveResult = await model.save(LOCAL_MODEL_URL);
@@ -792,7 +797,7 @@
             //zoomcanvas
             canvasvideo2.width = rectlen;
             canvasvideo2.height = rectlen;
-            canvasvideo2.getContext('2d').drawImage(canvas,0, 0);
+            canvasvideo2.getContext('2d').drawImage(canvas, 0, 0);
             await imagebalance(highalpha, lowalpha);
             canvasvideo2.getContext('2d').drawImage(canvasvideo2, (rectlen * (1 - zoomsize) / 2), (rectlen * (1 - zoomsize) / 2), rectlen * zoomsize, rectlen * zoomsize, 0, 0, rectlen, rectlen);
 
@@ -864,5 +869,11 @@
     <button onclick="test()" style="visibility:hidden;">test</button>
     <a id="todownload" download="mnist_labels_uint8" style="visibility:hidden;">download</a>
     <canvas id="testcanvas"></canvas>
+    
+    <script src="voicetfjs.js"></script>
+    <script src="index.js"></script>
+    <script type="text/javascript">
+        var labeltext = ['left', 'right', 'up', 'down', 'jarvis', 'confirm', 'negative', 'load data', 'show example', 'start training', 'matrix', 'noise'];
+    </script>
 </body>
 </html>
