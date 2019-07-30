@@ -9,14 +9,23 @@ function predictWord() {
         // Find the most probable word.
         scores.sort((s1, s2) => s2.score - s1.score);
         document.querySelector('#console').textContent = scores[0].word;
-    }, { probabilityThreshold: 0.75 });
+    }, { probabilityThreshold: 0.85 });
+}
+
+async function buildModel() {
+    //const model2 = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
+    const uploadJSONInput = document.getElementById('uploadvoicemodel');
+    const uploadWeightsInput = document.getElementById('uploadvoiceweight');
+    model = await tf.loadLayersModel(tf.io.browserFiles(
+        [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+    listen();
 }
 
 async function loadjarvis() {
     recognizer = speechCommands.create('BROWSER_FFT');
     await recognizer.ensureModelLoaded();
-    predictWord();
-    //buildModel();
+    //predictWord();
+    buildModel();
     //getVoiceModel();
 }
 //loadjarvis();
@@ -71,17 +80,6 @@ async function voicetrain() {
     tf.dispose([xs, ys]);
     toggleButtons(true);
 }
-
-async function buildModel() {
-    //const model2 = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
-
-    const uploadJSONInput = document.getElementById('uploadvoicemodel');
-    const uploadWeightsInput = document.getElementById('uploadvoiceweight');
-    model = await tf.loadLayersModel(tf.io.browserFiles(
-        [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
-    listen();
-}
-
 
 function toggleButtons(enable) {
     document.querySelectorAll('button').forEach(b => b.disabled = !enable);
@@ -168,10 +166,10 @@ function getVoiceModel() {
 
 async function moveSlider(labelTensor) {
     const label = (await labelTensor.data())[0];
-    if (labeltext[label] != 'noise') {
-        strshow = commandcenter(labeltext[label]);
-        alert(strshow);
-        document.getElementById('console').textContent = commandcenter(labeltext[label]);
+    if (labeltext[label] != 'noise' && labeltext[label] != "background") {
+        commandcenter(labeltext[label]);
+        //strshow = commandcenter(labeltext[label]);
+        //document.getElementById('console').textContent = commandcenter(labeltext[label]);
     }
 }
 var str1, str2, str3 = "";
@@ -179,8 +177,20 @@ function commandcenter(labelstr) {
     str1 = str2;
     str2 = str3;
     str3 = labelstr;
-    strshow = str1 + "-" + str2 + "-" + str3;
-    return strshow
+    document.getElementById('console').textContent = str1 + "-" + str2 + "-" + str3;
+    if (str1 == "jarvis") {
+        if (str2 == "load data") {
+            if (str3 == "confirm") { document.getElementById("load-data").click(); }
+        } else if (str2 == "show example") {
+            if (str3 == "confirm") { document.getElementById("show-examples").click(); }
+        } else if (str2 == "start training") {
+            if (str3 == "confirm") { document.getElementById("start-training-1").click(); }
+        } else if (str2 =="model summary") {
+            if (str3 == "confirm") { modelinspection(); }
+        } else if (str2 == "matrix") {
+            if (str3 == "confirm") { document.getElementById("show-all").click(); }
+        }
+    }
 }
 
 function listen() {
