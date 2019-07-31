@@ -187,6 +187,7 @@ function commandcenter(labelstr) {
     if (str1 == str2 && str2 == str3){
         switch (command_status) {
             case "call_jarvis":
+                alert(str3);
                 if (str3 == "jarvis") { command_status = "wait_command"; }
                 break;
             case "wait_command":
