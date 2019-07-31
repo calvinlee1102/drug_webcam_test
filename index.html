@@ -36,8 +36,10 @@
         Jarvis Model: <input id="uploadvoicemodel" type="file" /><br />
         Jarvis Weight: <input id="uploadvoiceweight" type="file" /><br />
         <button onclick="loadjarvis();">Load Jarvis</button><br />
-        Command: <a id="console"></a><br />
-        Status: <a id="status"></a><br />
+        <div style="position:fixed;margin-left:300px;margin-top:-80px;background-color:antiquewhite;border-style:groove;width:250px;">
+            Command: <a id="console"></a><br />
+            Status: <a id="status"></a>
+        </div>
         <button id="show-visor" style="visibility:hidden;">Show Visor</button><br />
         <b>Step1:</b><br />
         <button id="make-first-surface">Make a Workshop</button><br />
@@ -169,6 +171,7 @@
                     drawArea.appendChild(canvas);
                     imageTensor.dispose();
                 }
+                command_status += "over";
             }
             document.querySelector('#show-examples').addEventListener('click', async e => showExamples());
 
@@ -472,6 +475,7 @@
                     tickLabels: classNames
                 });
                 labels.dispose();
+                command_status += "over";
             }
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
@@ -521,6 +525,7 @@
                     maxlayerindex = (i - 1);
                 }
                 tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
+                command_status += "over";
             }
 
             const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
@@ -873,7 +878,7 @@
     <script src="voicetfjs.js"></script>
     <script src="index.js"></script>
     <script type="text/javascript">
-    var labeltext = ['left', 'right', 'up', 'down', 'jarvis', 'confirm', 'negative', 'load data', 'show example','model summary', 'start training', 'accuracy', 'noise', 'background'];
+    var labeltext = ['left', 'right', 'up', 'down', 'jarvis', 'confirm', 'negative', 'load_data', 'show_example','model_summary', 'start_training', 'accuracy', 'noise', 'background'];
     </script>
 </body>
 </html>
