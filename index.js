@@ -184,39 +184,39 @@ function commandcenter(labelstr) {
     str2 = str3;
     str3 = labelstr;
     document.getElementById('console').innerHTML = str1 + "-" + str2 + "-" + str3;
-
-    switch (command_status) {
-        case "call_jarvis":
-            if (str1 == str2 == str3 =="jarvis") { command_status = "wait_command"; }
-            break;
-        case "wait_command":
-            if (str1 == str2 == str3 == "over") { command_status = "call_jarvis"; }
-            if (str1 == str2 == str3 == "load_data") { command_status = "wait_confirm_load_data"; }
-            if (str1 == str2 == str3 == "show_example") { command_status = "wait_confirm_show_example"; }
-            if (str1 == str2 == str3 == "model_summary") { command_status = "wait_confirm_model_summary"; }
-            if (str1 == str2 == str3 == "start_training") { command_status = "wait_confirm_start_training"; }
-            break;
-        case "wait_confirm_load_data":
-            if (str1 == str2 == str3 == "confirm") { document.getElementById("load-data").click(); command_status = "data loading..."; }
-            if (str1 == str2 == str3 == "negative") { command_status = "call_jarvis"; }
-            break;
-        case "wait_confirm_show_example":
-            if (str1 == str2 == str3 == "confirm") { document.getElementById("show-examples").click(); command_status = "calculate example..."; }
-            if (str1 == str2 == str3 == "negative") { command_status = "call_jarvis"; }
-            break;
-        case "wait_confirm_model_summary":
-            if (str1 == str2 == str3 == "confirm") { modelinspection(); command_status = "collecting model data..."; }
-            if (str1 == str2 == str3 == "negative") { command_status = "call_jarvis"; }
-            break;
-        case "wait_confirm_start_training":
-            if (str1 == str2 == str3 == "confirm") { document.getElementById("start-training-1").click(); command_status = "training model..."; }
-            if (str1 == str2 == str3 == "negative") { command_status = "call_jarvis"; }
-            break;
-        case "wait_confirm_matrix":
-            if (str1 == str2 == str3 == "confirm") { document.getElementById("show-all").click(); command_status = "calculate confusion matrix..."; }
-            if (str1 == str2 == str3 == "negative") { command_status = "call_jarvis"; }
-            break;
-
+    if (str1 == str2 && str2 == str3){
+        switch (command_status) {
+            case "call_jarvis":
+                if (str3 == "jarvis") { command_status = "wait_command"; }
+                break;
+            case "wait_command":
+                if (str3 == "over") { command_status = "call_jarvis"; }
+                if (str3 == "load_data") { command_status = "wait_confirm_load_data"; }
+                if (str3 == "show_example") { command_status = "wait_confirm_show_example"; }
+                if (str3 == "model_summary") { command_status = "wait_confirm_model_summary"; }
+                if (str3 == "start_training") { command_status = "wait_confirm_start_training"; }
+                break;
+            case "wait_confirm_load_data":
+                if (str3 == "confirm") { document.getElementById("load-data").click(); command_status = "data loading..."; }
+                if (str3 == "negative") { command_status = "call_jarvis"; }
+                break;
+            case "wait_confirm_show_example":
+                if (str3 == "confirm") { document.getElementById("show-examples").click(); command_status = "calculate example..."; }
+                if (str3 == "negative") { command_status = "call_jarvis"; }
+                break;
+            case "wait_confirm_model_summary":
+                if (str3 == "confirm") { modelinspection(); command_status = "collecting model data..."; }
+                if (str3 == "negative") { command_status = "call_jarvis"; }
+                break;
+            case "wait_confirm_start_training":
+                if (str3 == "confirm") { document.getElementById("start-training-1").click(); command_status = "training model..."; }
+                if (str3 == "negative") { command_status = "call_jarvis"; }
+                break;
+            case "wait_confirm_matrix":
+                if (str3 == "confirm") { document.getElementById("show-all").click(); command_status = "calculate confusion matrix..."; }
+                if (str3 == "negative") { command_status = "call_jarvis"; }
+                break;
+        }
     }
     document.getElementById('status').innerHTML = command_status;
 }
