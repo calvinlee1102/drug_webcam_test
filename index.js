@@ -14,19 +14,19 @@ function predictWord() {
 }
 
 async function buildModel() {
-    //const model2 = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
-    const uploadJSONInput = document.getElementById('uploadvoicemodel');
-    const uploadWeightsInput = document.getElementById('uploadvoiceweight');
-    model = await tf.loadLayersModel(tf.io.browserFiles(
-        [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+    const model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
+    //const uploadJSONInput = document.getElementById('uploadvoicemodel');
+    //const uploadWeightsInput = document.getElementById('uploadvoiceweight');
+    //model = await tf.loadLayersModel(tf.io.browserFiles(
+        //[uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
     listen();
 }
 
 async function loadjarvis() {
     recognizer = speechCommands.create('BROWSER_FFT');
     await recognizer.ensureModelLoaded();
-    predictWord();
-    //buildModel();
+    //predictWord();
+    buildModel();
     //getVoiceModel();
 }
 //loadjarvis();
