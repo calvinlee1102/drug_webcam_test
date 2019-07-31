@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>Jarvis Training System</h1>
+    <h1>Jarvis Training System3</h1>
     <section>
         Jarvis Model: <input id="uploadvoicemodel" type="file" /><br />
         Jarvis Weight: <input id="uploadvoiceweight" type="file" /><br />
@@ -172,6 +172,7 @@
                     imageTensor.dispose();
                 }
                 command_status = "call_jarvis";
+                document.getElementById('status').innerHTML = command_status;
             }
             document.querySelector('#show-examples').addEventListener('click', async e => showExamples());
 
@@ -476,6 +477,7 @@
                 });
                 labels.dispose();
                 command_status = "call_jarvis";
+                document.getElementById('status').innerHTML = command_status;
             }
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
@@ -526,6 +528,7 @@
                 }
                 tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
                 command_status = "call_jarvis";
+                document.getElementById('status').innerHTML = command_status;
             }
 
             const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
