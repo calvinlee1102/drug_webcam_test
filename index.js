@@ -14,7 +14,7 @@ function predictWord() {
 }
 
 async function buildModel() {
-    const model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
+    model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
     //const uploadJSONInput = document.getElementById('uploadvoicemodel');
     //const uploadWeightsInput = document.getElementById('uploadvoiceweight');
     //model = await tf.loadLayersModel(tf.io.browserFiles(
