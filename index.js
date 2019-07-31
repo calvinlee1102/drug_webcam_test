@@ -14,7 +14,7 @@ function predictWord() {
 
 async function buildModel() {
     //model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
-    model = await tf.loadLayersModel('https://raw.githubusercontent.com/calvinlee1102/drug_webcam_test/master/mymodel.json');
+    voicemodel = await tf.loadLayersModel('https://raw.githubusercontent.com/calvinlee1102/drug_webcam_test/master/mymodel.json');
     //const uploadJSONInput = document.getElementById('uploadvoicemodel');
     //const uploadWeightsInput = document.getElementById('uploadvoiceweight');
     //model = await tf.loadLayersModel(tf.io.browserFiles(
@@ -61,7 +61,7 @@ function normalize(x) {
 const NUM_FRAMES = 43;
 let examples = [];
 const INPUT_SHAPE = [NUM_FRAMES, 232, 1];
-let model;
+let voicemodel;
 
 async function voicetrain() {
     toggleButtons(false);
@@ -69,7 +69,7 @@ async function voicetrain() {
     const xsShape = [examples.length, ...INPUT_SHAPE];
     const xs = tf.tensor(flatten(examples.map(e => e.vals)), xsShape);
 
-    await model.fit(xs, ys, {
+    await voicemodel.fit(xs, ys, {
         batchSize: 25,
         epochs: 10,
         callbacks: {
@@ -230,7 +230,7 @@ function listen() {
     recognizer.listen(async ({ spectrogram: { frameSize, data } }) => {
         const vals = normalize(data.subarray(-frameSize * NUM_FRAMES));
         const input = tf.tensor(vals, [1, ...INPUT_SHAPE]);
-        const probs = model.predict(input);
+        const probs = voicemodel.predict(input);
         const predLabel = probs.argMax(1);
         await moveSlider(predLabel);
         tf.dispose([input, probs, predLabel]);
@@ -244,6 +244,6 @@ function listen() {
 async function UploadModelFile() {
     const uploadJSONInput = document.getElementById('uploadmodel');
     const uploadWeightsInput = document.getElementById('uploadweight');
-    model = await tf.loadLayersModel(tf.io.browserFiles(
+    voicemodel = await tf.loadLayersModel(tf.io.browserFiles(
         [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
 }
