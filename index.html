@@ -198,96 +198,96 @@
                     const idx = index();
                     var image = data[0].slice(idx * IMAGE_SIZE, idx * IMAGE_SIZE + IMAGE_SIZE);
                     var degree = getRandom(rotatemin, rotatemax);
-                    await tf.browser.toPixels(tf.tensor1d(image).reshape([imgW, imgH, channel]), canvas);
+                    //await tf.browser.toPixels(tf.tensor1d(image).reshape([imgW, imgH, channel]), canvas);
 
-                    if (rotateboolean == "t") {
-                        var degree = getRandom(rotatemin, rotatemax);
-                        const ctx = canvas.getContext('2d');
-                        ctx.translate(canvas.width / 2, canvas.height / 2);
-                        ctx.rotate(degree * Math.PI / 180);
-                        ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
-                    }
-                    const canvas2 = document.createElement('canvas');
-                    //const canvas2 = document.getElementById('testcanvas');
-                    canvas2.width = imgW;
-                    canvas2.height = imgH;
-                    canvas2.style = 'margin: 4px;';
-                    const ctx2 = canvas2.getContext('2d');
-                    ctx2.fillStyle = "white";
-                    ctx2.fillRect(0, 0, canvas.width, canvas.height);
-                    var scale = 1;
-                    if (scaleboolean == "t") {
-                        var maxscale = parseFloat(document.getElementById('scalemax').value);
-                        var minscale = parseFloat(document.getElementById('scalemin').value);
-                        var scale = Math.random() * (maxscale - minscale) + minscale;
-                    }
-                    var shifthor = 0;
-                    var shiftver = 0;
-                    if (shiftboolean == "t") {
-                        var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
-                        var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
-                        shifthor *= canvas.width;
-                        shiftver *= canvas.height;
-                    }
-                    ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
+                    //if (rotateboolean == "t") {
+                    //    var degree = getRandom(rotatemin, rotatemax);
+                    //    const ctx = canvas.getContext('2d');
+                    //    ctx.translate(canvas.width / 2, canvas.height / 2);
+                    //    ctx.rotate(degree * Math.PI / 180);
+                    //    ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+                    //}
+                    //const canvas2 = document.createElement('canvas');
+                    ////const canvas2 = document.getElementById('testcanvas');
+                    //canvas2.width = imgW;
+                    //canvas2.height = imgH;
+                    //canvas2.style = 'margin: 4px;';
+                    //const ctx2 = canvas2.getContext('2d');
+                    //ctx2.fillStyle = "white";
+                    //ctx2.fillRect(0, 0, canvas.width, canvas.height);
+                    //var scale = 1;
+                    //if (scaleboolean == "t") {
+                    //    var maxscale = parseFloat(document.getElementById('scalemax').value);
+                    //    var minscale = parseFloat(document.getElementById('scalemin').value);
+                    //    var scale = Math.random() * (maxscale - minscale) + minscale;
+                    //}
+                    //var shifthor = 0;
+                    //var shiftver = 0;
+                    //if (shiftboolean == "t") {
+                    //    var shifthor = Math.random() * (parseFloat(document.getElementById('shifthor').value) * 2) - parseFloat(document.getElementById('shifthor').value);
+                    //    var shiftver = Math.random() * (parseFloat(document.getElementById('shiftver').value) * 2) - parseFloat(document.getElementById('shiftver').value);
+                    //    shifthor *= canvas.width;
+                    //    shiftver *= canvas.height;
+                    //}
+                    //ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, canvas.width / 2 + shifthor - (canvas.width * scale / 2), canvas.height / 2 + shiftver - (canvas.height * scale / 2), canvas.width * scale, canvas.height * scale);
 
-                    var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
-                    if (channelshiftboolean == "t") {
-                        var channelshift = getRandom((0 - channelshiftvalue), channelshiftvalue);
-                    } else {
-                        var channelshift = 0;
-                    }
-                    if (channel == 1) {
-                        for (let j = 0; j < imageData.data.length / 4; j++) {
-                            //Gray channel.
-                            var gray = imageData.data[j * 4];
-                            if (channelnoiseboolean == "t") {
-                                gray = (gray + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
-                                if (gray < 0) gray = 0;
-                                if (gray > 1) gray = 1;
-                                image[j] = gray;
-                            } else {
-                                gray = (imageData.data[j * 4] + channelshift) / 255;
-                                if (gray < 0) gray = 0;
-                                if (gray > 1) gray = 1;
-                                image[j] = gray;
-                            }
-                        }
-                    } else {
-                        for (let j = 0; j < imageData.data.length / 4; j++) {
-                            // All channel.
-                            var red = imageData.data[j * 4];
-                            var green = imageData.data[j * 4 + 1];
-                            var blue = imageData.data[j * 4 + 2];
-                            if (channelnoiseboolean == "t") {
-                                red = (red + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
-                                green = (green + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
-                                blue = (blue + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
-                                if (red < 0) red = 0;
-                                if (red > 1) red = 1;
-                                if (green < 0) green = 0;
-                                if (green > 1) green = 1;
-                                if (blue < 0) blue = 0;
-                                if (blue > 1) blue = 1;
-                                image[3 * j] = red;
-                                image[3 * j + 1] = green;
-                                image[3 * j + 2] = blue;
-                            } else {
-                                var red = (imageData.data[j * 4] + channelshift) / 255;
-                                var green = (imageData.data[j * 4 + 1] + channelshift) / 255;
-                                var blue = (imageData.data[j * 4 + 2] + channelshift) / 255;
-                                if (red < 0) red = 0;
-                                if (red > 1) red = 1;
-                                if (green < 0) green = 0;
-                                if (green > 1) green = 1;
-                                if (blue < 0) blue = 0;
-                                if (blue > 1) blue = 1;
-                                image[3 * j] = red;
-                                image[3 * j + 1] = green;
-                                image[3 * j + 2] = blue;
-                            }
-                        }
-                    }
+                    //var imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                    //if (channelshiftboolean == "t") {
+                    //    var channelshift = getRandom((0 - channelshiftvalue), channelshiftvalue);
+                    //} else {
+                    //    var channelshift = 0;
+                    //}
+                    //if (channel == 1) {
+                    //    for (let j = 0; j < imageData.data.length / 4; j++) {
+                    //        //Gray channel.
+                    //        var gray = imageData.data[j * 4];
+                    //        if (channelnoiseboolean == "t") {
+                    //            gray = (gray + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                    //            if (gray < 0) gray = 0;
+                    //            if (gray > 1) gray = 1;
+                    //            image[j] = gray;
+                    //        } else {
+                    //            gray = (imageData.data[j * 4] + channelshift) / 255;
+                    //            if (gray < 0) gray = 0;
+                    //            if (gray > 1) gray = 1;
+                    //            image[j] = gray;
+                    //        }
+                    //    }
+                    //} else {
+                    //    for (let j = 0; j < imageData.data.length / 4; j++) {
+                    //        // All channel.
+                    //        var red = imageData.data[j * 4];
+                    //        var green = imageData.data[j * 4 + 1];
+                    //        var blue = imageData.data[j * 4 + 2];
+                    //        if (channelnoiseboolean == "t") {
+                    //            red = (red + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                    //            green = (green + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                    //            blue = (blue + getRandom((0 - channelnoise), channelnoise) + channelshift) / 255;
+                    //            if (red < 0) red = 0;
+                    //            if (red > 1) red = 1;
+                    //            if (green < 0) green = 0;
+                    //            if (green > 1) green = 1;
+                    //            if (blue < 0) blue = 0;
+                    //            if (blue > 1) blue = 1;
+                    //            image[3 * j] = red;
+                    //            image[3 * j + 1] = green;
+                    //            image[3 * j + 2] = blue;
+                    //        } else {
+                    //            var red = (imageData.data[j * 4] + channelshift) / 255;
+                    //            var green = (imageData.data[j * 4 + 1] + channelshift) / 255;
+                    //            var blue = (imageData.data[j * 4 + 2] + channelshift) / 255;
+                    //            if (red < 0) red = 0;
+                    //            if (red > 1) red = 1;
+                    //            if (green < 0) green = 0;
+                    //            if (green > 1) green = 1;
+                    //            if (blue < 0) blue = 0;
+                    //            if (blue > 1) blue = 1;
+                    //            image[3 * j] = red;
+                    //            image[3 * j + 1] = green;
+                    //            image[3 * j + 2] = blue;
+                    //        }
+                    //    }
+                    //}
 
                     batchImagesArray.set(image, i * IMAGE_SIZE);
                     const label = data[1].slice(idx * NUM_CLASSES, idx * NUM_CLASSES + NUM_CLASSES);

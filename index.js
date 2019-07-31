@@ -8,18 +8,19 @@ function predictWord() {
         scores = Array.from(scores).map((s, i) => ({ score: s, word: words[i] }));
         // Find the most probable word.
         scores.sort((s1, s2) => s2.score - s1.score);
-        commandcenter(scores[0].word);
         document.querySelector('#console').textContent = scores[0].word;
     }, { probabilityThreshold: 0.85 });
 }
 
 async function buildModel() {
-    model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
+    //model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v0.3/browser_fft/18w/model.json');
+    model = await tf.loadLayersModel('https://raw.githubusercontent.com/calvinlee1102/drug_webcam_test/master/mymodel.json');
     //const uploadJSONInput = document.getElementById('uploadvoicemodel');
     //const uploadWeightsInput = document.getElementById('uploadvoiceweight');
     //model = await tf.loadLayersModel(tf.io.browserFiles(
-        //[uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+    //    [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
     listen();
+    document.getElementById("status").innerHTML = "Jarvis Loaded";
 }
 
 async function loadjarvis() {
