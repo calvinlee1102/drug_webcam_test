@@ -195,6 +195,7 @@ function commandcenter(labelstr) {
                 if (str3 == "show_example") { command_status = "wait_confirm_show_example"; }
                 if (str3 == "model_summary") { command_status = "wait_confirm_model_summary"; }
                 if (str3 == "start_training") { command_status = "wait_confirm_start_training"; }
+				if (str3 == "accuracy") { command_status = "wait_confirm_accuracy"; }
                 break;
             case "wait_confirm_load_data":
                 if (str3 == "confirm") { document.getElementById("load-data").click(); command_status = "data loading..."; }
@@ -212,7 +213,7 @@ function commandcenter(labelstr) {
                 if (str3 == "confirm") { document.getElementById("start-training-1").click(); command_status = "training model..."; }
                 if (str3 == "negative") { command_status = "call_jarvis"; }
                 break;
-            case "wait_confirm_matrix":
+            case "wait_confirm_accuracy":
                 if (str3 == "confirm") { document.getElementById("show-all").click(); command_status = "calculate confusion matrix..."; }
                 if (str3 == "negative") { command_status = "call_jarvis"; }
                 break;
