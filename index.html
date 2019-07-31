@@ -171,7 +171,7 @@
                     drawArea.appendChild(canvas);
                     imageTensor.dispose();
                 }
-                command_status += "over";
+                command_status = "call_jarvis";
             }
             document.querySelector('#show-examples').addEventListener('click', async e => showExamples());
 
@@ -475,7 +475,7 @@
                     tickLabels: classNames
                 });
                 labels.dispose();
-                command_status += "over";
+                command_status = "call_jarvis";
             }
             document.querySelector('#show-all').addEventListener('click', () => showAll());
 
@@ -525,7 +525,7 @@
                     maxlayerindex = (i - 1);
                 }
                 tfvis.show.layer(container, model.getLayer(undefined, maxlayerindex));
-                command_status += "over";
+                command_status = "call_jarvis";
             }
 
             const LOCAL_MODEL_URL = 'indexeddb://tfjs-mnist-model/v1';
