@@ -205,7 +205,7 @@ function commandcenter(labelstr) {
                 if (str3 == "negative") { command_status = "call_jarvis"; }
                 break;
             case "wait_confirm_model_summary":
-                if (str3 == "confirm") { modelinspection(); command_status = "collecting model data..."; }
+                if (str3 == "confirm") { modelinspection(); }
                 if (str3 == "negative") { command_status = "call_jarvis"; }
                 break;
             case "wait_confirm_start_training":
