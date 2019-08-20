@@ -31,7 +31,7 @@
     <script src="everymodel.js"></script>
 </head>
 <body>
-    <h1>Jarvis Training System</h1>
+    <h1>Jarvis Training System-2</h1>
     <section>
         Jarvis Model: <input id="uploadvoicemodel" type="file" /><br />
         Jarvis Weight: <input id="uploadvoiceweight" type="file" /><br />
@@ -490,7 +490,7 @@
                 var canvasvideo = document.getElementById('videocanvas2');
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(canvasvideo, 0, 0, canvasvideo.width, canvasvideo.height, 0, 0, canvas.width, canvas.height);
-                var testxs = await tf.browser.fromPixels(canvas, channel).expandDims();
+                var testxs = await tf.browser.fromPixels(canvas, channel).expandDims().toFloat().div(tf.scalar(255));
                 var preds = await model.predict(testxs).argMax([-1]).data();
                 document.getElementById("predictA").innerHTML = classNames[preds];
                 preds.dispose();
