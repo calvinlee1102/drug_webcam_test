@@ -32,7 +32,7 @@
     <script src="vector_data.js"></script>
 </head>
 <body>
-    <h1>Jarvis Training System-10</h1>
+    <h1>Jarvis Training System-11</h1>
     <section>
         Jarvis Model: <input id="uploadvoicemodel" type="file" /><br />
         Jarvis Weight: <input id="uploadvoiceweight" type="file" /><br />
@@ -496,8 +496,8 @@
 		var preds = await model.predict(testxs);
 		const yTrue = tf.tensor2d(arrayData);
 		const yPred = preds;
-		var preds_data = await preds.argMax([-1]).data();
-		alert(preds_data[0].length);
+		var preds_data = await preds.data();
+		alert(preds_data.length);
 		const PearsonCosine = tf.metrics.cosineProximity(yTrue.sub(tf.mean(yTrue)), yPred.sub(tf.mean(yPred)));
 		alert("Cosine: "+tf.metrics.cosineProximity(yTrue,yPred));
 		alert("PearsonCosine: " + PearsonCosine);
